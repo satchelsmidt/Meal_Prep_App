@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/assets/js/userOnly.js"></script>
+  </head>
+  <body>
+
+    <!-- Logout capabilities in header -->
+      <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/logout">
+                Logout
+              </a>
+            </div>
+          </div>
+        </nav>
+
+      
+    <h1>Welcome to the world's best meal prep application</h1>
+
+    <p>Questions:
+    how many html pages should I have for all of these functions? 
+
+    This is the page that the user sees when they first enter the site. It has two states:
+      if a user is logged in, it will show options to:
+       - 'create plan' which takes user to create plan page.
+       - 'view plans' which takes user to page with list of created plans.
+
+       if a user is not logged in, they will have two options:
+       - 'log in', which lets them log in (with google?)
+       - 'create profile', which takes them to user.html
+      </p>
+
+
+      <!-- log in conditions -->
+      <div>
+        
+      <button id="buttonOne">View Plans</button>
+      <button id="buttonTwo">Create Plan</button>
+
+     </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

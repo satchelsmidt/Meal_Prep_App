@@ -1,0 +1,55 @@
+s<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Create Plan</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+
+<body>
+
+    <h1>This is where the user creates plans</h1>
+
+    <form id="recipeQuery">
+        
+        <h4>Cuisines:</h4>
+       
+        <input type="button" class="cuisineButton" id="cuisineOne" value="Italian">
+        <input type="button" 
+        class="cuisineButton" id="cuisineTwo" value="Indian">
+
+        <br>
+
+        <h4>Dietary Preferences:</h4>
+       
+        <input type="button" class="dietButton"id="dietOne" value="Vegan">
+        <input type="button" class="dietButton" id="dietTwo" value="Paleo">
+
+        <br>
+
+        <input type="button" id="recipeSearch" value="Search Recipes!">
+    </form>
+
+    <div id="recipesReturned">
+        <!-- location where we paste data fromour recipes to user -->
+        
+
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Optional JavaScript -->
+    <script src="/assets/js/createPlan.js"></script>
+
+</body>
+
+</html>
