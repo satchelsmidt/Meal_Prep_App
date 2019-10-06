@@ -2,8 +2,8 @@
 // define many to many relationship between recipes/plans
 module.exports = function(sequelize, DataTypes) {
     var Plan = sequelize.define("Plan", {
-      start_date: DataTypes.STRING,
-      end_date: DataTypes.STRING,
+      start_date: DataTypes.DATE,
+      end_date: DataTypes.DATE,
       totalMins: DataTypes.INTEGER
     });
   

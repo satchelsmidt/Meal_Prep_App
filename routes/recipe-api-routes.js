@@ -1,6 +1,20 @@
 //Import/require express setup vars
 var express = require('express');
-var router = express.Router();
+// var router = express.Router();
+
+var db = require("../models")
+
+module.exports = function(app){
+    console.log("please help")
+    app.post("/api/recipes", function(req, res){
+        console.log("This is your first recipe api thing")
+        db.Recipe.create(req.body)
+        .then(function(data){
+            console.log("This is your second recipe api thing")
+            res.json(data)
+        });
+    });
+};
 
 /////////IDEA OF STEPS///////////////
 //0. user makes selections on 'cuisine 'and 'diet' forms that determines parameters for external AJAX call (create.html)
@@ -11,17 +25,17 @@ var router = express.Router();
     //export this to plan_controller.js
     //example (tentative) below
 
-    var selectedRecipes = require("../public/assets/js/createPlan.js/index.js")
+    // var selectedRecipes = require("../public/assets/js/createPlan.js/index.js")
 
 //2. Within plan_controller.js, POST ID from those selected recipes to the database and store it in a way that makes sense (via this page)
     //2.a. store recipe info (JUST ID??), tie to plan created, tie to user who created plan
 
     //example below
-    router.post("/api/recipes", function(req, res){
-        selectedRecipes.addRecipes([
-            "recipe_id"
-        ])
-    });
+    // router.post("/api/recipes", function(req, res){
+    //     selectedRecipes.addRecipes([
+    //         "recipe_title"
+    //     ])
+    // });
     
 
 //3. Create 'get' function on plan_controller.js that runs when user clicks 'create plan'

@@ -24,9 +24,13 @@ app.use(passport.session());
 //AREA WHERE WE REQUIRE VARIOUS ROUTE FUNCTIONS
 
 //TODO: input the various route functions
+// var recipeRoutes = require("./routes/recipe-api-routes.js")
 
+require("./routes/recipe-api-routes.js")(app)
 require("./routes/user-api-routes.js")(app)
 require("./routes/html-routes.js")(app)
+
+// app.use(recipeRoutes)
 
 //Sync up database via sequelize before loading page
 db.sequelize.sync().then(function(){

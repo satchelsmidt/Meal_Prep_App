@@ -1,7 +1,9 @@
 //TODO:
 // define many to many relationship between recipes/plans
 module.exports = function(sequelize, DataTypes) {
-    var Recipe = sequelize.define("Recipe", {});
+    var Recipe = sequelize.define("Recipe", {
+      recipe_title: DataTypes.STRING,
+    });
   
     Recipe.associate = function(models) {
       // Recipe.belongsTo(models.Plan, {
