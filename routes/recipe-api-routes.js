@@ -1,16 +1,12 @@
 //Import/require express setup vars
 var express = require('express');
-// var router = express.Router();
 
 var db = require("../models")
 
 module.exports = function(app){
-    console.log("please help")
     app.post("/api/recipes", function(req, res){
-        console.log("This is your first recipe api thing")
         db.Recipe.create(req.body)
         .then(function(data){
-            console.log("This is your second recipe api thing")
             res.json(data)
         });
     });

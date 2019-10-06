@@ -1,18 +1,16 @@
-//TODO:
-// define many to many relationship between recipes/plans
 module.exports = function(sequelize, DataTypes) {
     var Recipe = sequelize.define("Recipe", {
       recipe_title: DataTypes.STRING,
+      recipe_image: DataTypes.STRING,
+      recipe_link: DataTypes.STRING,
+      recipe_cuisines: DataTypes.STRING,
+      recipe_time: DataTypes.STRING,
+      recipe_servings: DataTypes.STRING,
+      recipe_ingredients: DataTypes.STRING,
+      recipe_steps: DataTypes.TEXT,
     });
   
     Recipe.associate = function(models) {
-      // Recipe.belongsTo(models.Plan, {
-      //   //Not sure I need this section within this model? confirm
-      //   foreignKey: {
-      //     allowNull: false
-      //   }
-      // });
-
       Recipe.belongsToMany(models.Plan, {
         as: 'recipe',
         through: 'Recipe_Plan',

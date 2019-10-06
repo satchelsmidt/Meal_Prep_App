@@ -1,16 +1,19 @@
 //This file is where we are taking in the data from our refined AJAX call to compose a plan (made up of a select few recipes)
 
+
+
+
 /////////CALENDAR SECTION////////////
 
 //idea is to have selectable input boxes which allow user to select time available throughout the week. Recipes returned are then displayed on this page. 
 
-
+//////END CALENDAR SECTION/////////////
 
 //cuisine types to include in search (can be comma separated list)
-
+//Begins as empty and cuisings are added, separated by commas as necessary
 var cuisines = ""
 
-//function that occurs on click of either cuisine button
+//function that occurs on click of any cuisine button, adds type of cuisine on button to AJAX query
 $(".cuisineButton").on("click", function () {
     var cuisine = $(this).val().trim()
     if (cuisines === "") {
@@ -23,7 +26,7 @@ $(".cuisineButton").on("click", function () {
     console.log("CUISINE:", cuisine)
 })
 
-
+//Same functionality as cuisine var and function, only adds dietary preferences
 var diets = ""
 
 $(".dietButton").on("click", function () {
@@ -38,13 +41,17 @@ $(".dietButton").on("click", function () {
     console.log("DIET:", diet)
 })
 
-
+//Where we define all of the data we would like to return from our AJAX call for later storage in our DB
 var recipeTitle
+var recipeImg
+var recipeLink
+var recipeCuisines
+var recipeTime
+var recipeServings
+var ingredientsArr
+var stepsArr
 
 $("#recipeSearch").on("click", function () {
-    console.log("LIST OF CUISINSE:", cuisines)
-
-    console.log("LIST OF DIETS:", diets)
 
     var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&number=2&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
 
@@ -52,132 +59,132 @@ $("#recipeSearch").on("click", function () {
         url: queryURL,
         method: "GET"
     }).then(function (data) {
-        console.log("Data Returned:", data)
+        console.log("Data Returned: ", data)
 
+        //For loop to iterate through returned recipes
         for (let i = 0; i < data.results.length; i++) {
-            //
-            //TODO: devclare all vars globally
+            //Create div within div to hold each recipe
+            var recipeDiv = $("<div>")
+
+            //Globally declared vars are defined here
             recipeTitle = data.results[i].title
-
-            console.log("TITLE OF RECIPE: ", recipeTitle)
-
+            console.log("TITLE: ", recipeTitle)
             var title = $("<h1>").text(recipeTitle)
-
             $("#recipesReturned").append(title)
+
             //
-            var recipeImg = data.results[i].image
 
-            console.log("IMAGE OF RECIPE: ", recipeImg)
-
+            recipeImg = data.results[i].image
+            console.log("IMAGE: ", recipeImg)
             var img = $("<img>").attr("src", recipeImg)
-
             $("#recipesReturned").append(img)
-            //
-            var recipeLink = data.results[i].sourceUrl
-
-            console.log("LINK OF RECIPE: ", recipeLink)
-
-            $("#recipesReturned").append("<h5>Recipe Source:</h5>" + recipeLink)
             $("#recipesReturned").append("<br>")
+
             //
-            var recipeCuisines = data.results[i].cuisines.toString()
 
-            console.log("CUISINSE OF RECIPE: ", recipeCuisines)
+            recipeLink = data.results[i].sourceUrl
+            console.log("LINK: ", recipeLink)
+            var link = $("<a target='_blank' href='"+recipeLink+"'>"+"Recipe Link"+"</a>")
+            $("#recipesReturned").append(link)
 
-            var cuisineTypes = $("<p>").append("<h5>Cuisine Types: <h5>"+ recipeCuisines)
+            //
 
-            console.log("array string attempt (cuisines): ", recipeCuisines)
-
+            recipeCuisines = data.results[i].cuisines.toString()
+            console.log("CUISINES: ", recipeCuisines)
+            var cuisineTypes = $("<p>").append("Cuisine Types: ", recipeCuisines)
             $("#recipesReturned").append(cuisineTypes)
+
             //
-            var recipeTime = data.results[i].readyInMinutes.toString()
 
-            console.log("COOK TIME OF RECIPE: ", recipeTime)
-            console.log("type of time: ", typeof (recipeTime))
-
-            var time = $("<p>").append("Cook Time: ", recipeTime, "minutes")
-
-            console.log("number string attempt (time): ", recipeTime.toString())
-
+            recipeTime = data.results[i].readyInMinutes.toString()
+            console.log("COOK TIME: ", recipeTime)
+            var time = $("<p>").append("Cook Time: ", recipeTime, " minutes")
             $("#recipesReturned").append(time)
+
             //
-            var recipeServings = data.results[i].servings
 
-            console.log("SERVINGS OF RECIPE: ", recipeServings)
-
-            var servings = $("<p>").text("Servings: ", recipeServings.toString(), " servings")
-
-            console.log("number string attempt (servings): ", recipeServings.toString())
-
+            recipeServings = data.results[i].servings.toString()
+            console.log("SERVINGS: ", recipeServings)
+            var servings = $("<p>").append("Servings: ", recipeServings, " servings")
             $("#recipesReturned").append(servings)
+            
             //
-            var ingredientsArr = []
-
+            ingredientsArr = []
+            stepsArr = []
             for (let k = 0; k < data.results[i].analyzedInstructions[0].steps.length; k++) {
 
                 var ingredient = data.results[i].analyzedInstructions[0].steps[k].ingredients
-
                 for (let j = 0; j < ingredient.length; j++) {
                     ingredientsArr.push(ingredient[j].name)
                 }
-                console.log("Ingredients at this step:", ingredient)
+
+                var step = data.results[i].analyzedInstructions[0].steps[k].step
+                stepsArr.push(step)
             }
 
-            console.log("Array of various ingredients:", ingredientsArr)
+            console.log("INGREDIENTS ARR:", ingredientsArr)
+            console.log("INGREDIENTS ARR (STRING):", ingredientsArr.toString())
 
-            var ingredientsList = $("<p>").text("Ingredients: ", ingredientsArr.toString())
-
-            console.log("array string attempt (ingredients): ", ingredientsList.toString())
-
-            $("#recipesReturned").append(ingredientsList)
+            ingredientsArr = ingredientsArr.toString();
+            // var ingredientsList = $("<p>").append("Ingredients: ", ingredientsArr)
+            // $("#recipesReturned").append(ingredientsList)
             //
-            var addRecipe = $("<button>").attr("value", "Add to Plan")
+            //STEPS INFORMATION (DON't NEED TO DISPLAY)
+            stepsArr = stepsArr.toString()
+            console.log("Array of various steps:", stepsArr)
 
+            //Append 'add to plan' button
+            var addRecipe = $("<button>")
             addRecipe.attr("class", "addRecipe")
-
             addRecipe.text("Add recipe to plan!")
 
-            addRecipe.attr("data-id", data.results[i])
-
+            //Add all data to button because we need to link it to each buttonclick
             addRecipe.data("title", recipeTitle)
+            addRecipe.data("img", recipeImg)
+            addRecipe.data("link", recipeLink)
+            addRecipe.data("cuisines", recipeCuisines)
+            addRecipe.data("time", recipeTime)
+            addRecipe.data("servings", recipeServings)
+            addRecipe.data("ingredients", ingredientsArr)
+            addRecipe.data("steps", stepsArr)
 
             $("#recipesReturned").append(addRecipe)
-
-            //STORE THESE BUT DO NOT DISPLAY ON PAGE
-            var recipeId = data.results[i].id
-            console.log("ID OF RECIPE: ", recipeId.toString())
-
-            var stepsArr = []
-            //
         }
     })
 })
 
-$("#recipesReturned").on("click", ".addRecipe", function(event){
+$("#recipesReturned").on("click", ".addRecipe", function (event) {
 
     event.preventDefault()
-    console.log("YOU CLICKED")
-
-    console.log("THIS: ", $(this))
 
     var theActualRecipeTitle = $(this).data("title")
-
-    console.log(theActualRecipeTitle)
+    var theActualRecipeImage = $(this).data("img")
+    var theActualRecipeLink = $(this).data("link")
+    var theActualRecipeCuisines = $(this).data("cuisines")
+    var theActualRecipeTime = $(this).data("time")
+    var theActualRecipeServings = $(this).data("servings")
+    var theActualRecipeIngredients = $(this).data("ingredients")
+    var theActualRecipeSteps = $(this).data("steps")
 
     var recipeDetails = {
-        recipe_title: theActualRecipeTitle
+        recipe_title: theActualRecipeTitle,
+        recipe_image: theActualRecipeImage,
+        recipe_link: theActualRecipeLink,
+        recipe_cuisines: theActualRecipeCuisines,
+        recipe_time: theActualRecipeTime,
+        recipe_servings: theActualRecipeServings,
+        recipe_ingredients: theActualRecipeIngredients,
+        recipe_steps: theActualRecipeSteps
     }
     console.log(recipeDetails)
 
-    $.post("/api/recipes", recipeDetails, function(data) {
+    $.post("/api/recipes", recipeDetails, function (data) {
         console.log("THIS IS YOUR DATA:", data)
+    })
 })
-})
 
+//TODO:
 
-
-
-
-//cuisine types to NOT include in search (can be comma separated list)
+//1. cuisine types to NOT include in search (can be comma separated list). Similar construction to existing params
 var dontLike = "Greek"
 
