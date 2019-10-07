@@ -26,6 +26,7 @@ app.use(passport.session());
 //TODO: input the various route functions
 // var recipeRoutes = require("./routes/recipe-api-routes.js")
 
+require("./routes/plan-api-routes.js")(app)
 require("./routes/recipe-api-routes.js")(app)
 require("./routes/user-api-routes.js")(app)
 require("./routes/html-routes.js")(app)

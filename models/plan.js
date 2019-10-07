@@ -1,9 +1,16 @@
-//TODO:
-// define many to many relationship between recipes/plans
 module.exports = function(sequelize, DataTypes) {
     var Plan = sequelize.define("Plan", {
       start_date: DataTypes.DATE,
       end_date: DataTypes.DATE,
+      //NOT SURE IF I NEED (minutes available each day -- seems like necessary to accurately place recipes):
+      //mMins
+      //tMins
+      //wMins
+      //thMins
+      //fMins
+      //sMins
+      //suMins
+      maxMins: DataTypes.INTEGER,
       totalMins: DataTypes.INTEGER
     });
   

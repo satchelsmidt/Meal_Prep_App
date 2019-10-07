@@ -51,6 +51,8 @@ var recipeServings
 var ingredientsArr
 var stepsArr
 
+var recipeDiv
+
 $("#recipeSearch").on("click", function () {
 
     var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&number=2&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
@@ -64,49 +66,50 @@ $("#recipeSearch").on("click", function () {
         //For loop to iterate through returned recipes
         for (let i = 0; i < data.results.length; i++) {
             //Create div within div to hold each recipe
-            var recipeDiv = $("<div>")
+            recipeDiv = $("<div>")
+            recipeDiv.attr("class", "uniqueRecipe")
 
             //Globally declared vars are defined here
             recipeTitle = data.results[i].title
             console.log("TITLE: ", recipeTitle)
             var title = $("<h1>").text(recipeTitle)
-            $("#recipesReturned").append(title)
+            recipeDiv.append(title)
 
             //
 
             recipeImg = data.results[i].image
             console.log("IMAGE: ", recipeImg)
             var img = $("<img>").attr("src", recipeImg)
-            $("#recipesReturned").append(img)
-            $("#recipesReturned").append("<br>")
+            recipeDiv.append(img)
+            recipeDiv.append("<br>")
 
             //
 
             recipeLink = data.results[i].sourceUrl
             console.log("LINK: ", recipeLink)
             var link = $("<a target='_blank' href='"+recipeLink+"'>"+"Recipe Link"+"</a>")
-            $("#recipesReturned").append(link)
+            recipeDiv.append(link)
 
             //
 
             recipeCuisines = data.results[i].cuisines.toString()
             console.log("CUISINES: ", recipeCuisines)
             var cuisineTypes = $("<p>").append("Cuisine Types: ", recipeCuisines)
-            $("#recipesReturned").append(cuisineTypes)
+            recipeDiv.append(cuisineTypes)
 
             //
 
             recipeTime = data.results[i].readyInMinutes.toString()
             console.log("COOK TIME: ", recipeTime)
             var time = $("<p>").append("Cook Time: ", recipeTime, " minutes")
-            $("#recipesReturned").append(time)
+            recipeDiv.append(time)
 
             //
 
             recipeServings = data.results[i].servings.toString()
             console.log("SERVINGS: ", recipeServings)
             var servings = $("<p>").append("Servings: ", recipeServings, " servings")
-            $("#recipesReturned").append(servings)
+            recipeDiv.append(servings)
             
             //
             ingredientsArr = []
@@ -127,7 +130,7 @@ $("#recipeSearch").on("click", function () {
 
             ingredientsArr = ingredientsArr.toString();
             // var ingredientsList = $("<p>").append("Ingredients: ", ingredientsArr)
-            // $("#recipesReturned").append(ingredientsList)
+            // recipeDiv.append(ingredientsList)
             //
             //STEPS INFORMATION (DON't NEED TO DISPLAY)
             stepsArr = stepsArr.toString()
@@ -148,14 +151,38 @@ $("#recipeSearch").on("click", function () {
             addRecipe.data("ingredients", ingredientsArr)
             addRecipe.data("steps", stepsArr)
 
-            $("#recipesReturned").append(addRecipe)
+            recipeDiv.append(addRecipe)
+
+            $("#recipesReturned").append(recipeDiv)
         }
+
+        var createPlan = $("<button>")
+        createPlan.attr("id", "createPlan")
+        createPlan.text("CREATE YOUR PLAN!")
+
+        $("#recipesReturned").append($("<br>"))
+        $("#recipesReturned").append(createPlan)
+        //This button will:
+        //Take user to a new page ('plan' or similar)
+        //aggregate all the recipes that have been selected and added on this page
+            //HOW TO DO???
+        //'GET' the data from those recipes and display them on a visual calendar on the next page
+        
+        //PLANS api should:
+            //take in total minutes that user has on various days
     })
 })
 
-$("#recipesReturned").on("click", ".addRecipe", function (event) {
 
+//modify below code to create new plan and add each recipe to plan+recipe table
+
+
+
+$(document).on("click", ".addRecipe", function (event) {
+
+    console.log("CLICKED A BUTTON")
     event.preventDefault()
+   
 
     var theActualRecipeTitle = $(this).data("title")
     var theActualRecipeImage = $(this).data("img")

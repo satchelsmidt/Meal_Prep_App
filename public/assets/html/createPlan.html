@@ -1,4 +1,5 @@
-s<!doctype html>
+s
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -15,21 +16,33 @@ s<!doctype html>
 
 <body>
 
+    <h1>This is where the user inputs available time</h1>
+
+
+    <form id="calendarInput">
+        Monday minutes: <input type="text" name="monMins" id="monMins">
+        <br>
+        Tuesday minutes: <input type="text" name="tueMins" id="tueMins">
+        <br>
+        Wednesday minutes: <input type="text" name="wedMins" id="wedMins">
+    </form>
+
+
+
     <h1>This is where the user creates plans</h1>
 
     <form id="recipeQuery">
-        
+
         <h4>Cuisines:</h4>
-       
+
         <input type="button" class="cuisineButton" id="cuisineOne" value="Italian">
-        <input type="button" 
-        class="cuisineButton" id="cuisineTwo" value="Indian">
+        <input type="button" class="cuisineButton" id="cuisineTwo" value="Indian">
 
         <br>
 
         <h4>Dietary Preferences:</h4>
-       
-        <input type="button" class="dietButton"id="dietOne" value="Vegan">
+
+        <input type="button" class="dietButton" id="dietOne" value="Vegan">
         <input type="button" class="dietButton" id="dietTwo" value="Paleo">
 
         <br>
@@ -39,7 +52,7 @@ s<!doctype html>
 
     <div id="recipesReturned">
         <!-- location where we paste data from our recipes to user -->
-        
+
 
     </div>
 

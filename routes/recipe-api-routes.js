@@ -5,9 +5,23 @@ var db = require("../models")
 
 module.exports = function(app){
     app.post("/api/recipes", function(req, res){
+        // let plan_id = req.body.id
         db.Recipe.create(req.body)
+        //add plan id to req.body
         .then(function(data){
+            //need to create object to pass to .plan.create() 
+            // var idAssociations = {
+            //     recipe_id: data.id,
+            //     plan_id: req.body.id
+            // }
+            // db.Plan.create(idAssociations)
+            // .then(function(){
+            //     res.json(idAssociations)
+            // })
+            
+            //within .then, this button should create a record in your plans table
             res.json(data)
+            
         });
     });
 };
