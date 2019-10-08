@@ -1,5 +1,5 @@
 //Import/require express setup vars
-var express = require('express');
+// var express = require('express');
 
 var db = require("../models")
 
@@ -20,8 +20,7 @@ module.exports = function(app){
             // })
             
             //within .then, this button should create a record in your plans table
-            res.json(data)
-            
+            res.json(data)   
         });
     });
 };

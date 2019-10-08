@@ -2,11 +2,13 @@
 var express = require('express');
 var session = require('express-session');
 
+// require("dotenv").config();
+
 var passport = require("./config/passport.js")
 
 var db = require("./models")
 
-var PORT = process.env.PORT || 4343;
+var PORT = process.env.PORT || 3000;
 var app = express();
 
 //setup middleware
@@ -24,7 +26,6 @@ app.use(passport.session());
 //AREA WHERE WE REQUIRE VARIOUS ROUTE FUNCTIONS
 
 //TODO: input the various route functions
-// var recipeRoutes = require("./routes/recipe-api-routes.js")
 
 require("./routes/plan-api-routes.js")(app)
 require("./routes/recipe-api-routes.js")(app)
@@ -34,7 +35,7 @@ require("./routes/html-routes.js")(app)
 // app.use(recipeRoutes)
 
 //Sync up database via sequelize before loading page
-db.sequelize.sync().then(function(){
+db.sequelize.sync({force: false}).then(function(){
     app.listen(PORT,function(){
         console.log("App running at http://localhost:" + PORT)
     })

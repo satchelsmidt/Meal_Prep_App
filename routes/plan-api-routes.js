@@ -1,15 +1,27 @@
-var express = require('express')
+// var express = require('express')
 
 var db = require("../models")
 
 module.exports = function(app){
-    console.log("first plan api hit")
-    app.post("/api/plans", function(req, res){
-        db.Plan.create(req.body)
-        console.log("req.body:", req.body)
-        // .then(function(data){
-        //     console.log("third plan api hit")
-        //     // res.json(data)
-        // })
+
+    app.get("/api/plans", function(req, res) {
+        db.Plans.findAll(req.body, {include: [
+                {model: db.User}
+            ]}).then(function(data) {
+            res.json(data);
+        })
     })
-}
+
+    app.post("/api/plans", function(req, res){
+        console.log(req.body)
+        db.Plan.create(req.body, {
+            // include: [
+            //     {model: db.User}
+            // ]
+        })
+        .then(function(data){
+            console.log("data returned from api/plans POST request")
+            res.json(data)
+        });
+    });
+};
