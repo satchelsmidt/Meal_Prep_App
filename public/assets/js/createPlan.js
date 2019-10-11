@@ -8,43 +8,81 @@ $(document).ready(function () {
         planId = data[0].id;
         console.log("THIS SHOULD BE THE ID OF THE CURRENT PLAN:", planId)
     });
+
+    //initialize timepicker plugin from JQuery
+    $('.timepicker').timepicker({
+        timeFormat: 'HH:mm:ss',
+        interval: 60,
+        minTime: '10',
+        maxTime: '6:00pm',
+        defaultTime: '11',
+        startTime: '10:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
 });
 
 
 
 /////////CALENDAR SECTION////////////
 
-//calendar variables
-import { Calendar } from '@fullcalendar/core';
+// $(document).ready(function(){
+//     $('#calendar').fullCalendar({
+//         defaultView: 'agendaWeek',
+//         editable: true
+//     })
+// })
 
-//THIS IS A PLUGIN
-import dayGridPlugin from '@fullcalendar/daygrid';
+//////////////////////////////////////
 
-document.addEventListener('DOMContentLoaded', function(){
-    var calendarEl = document.getElementById(
-        'calendar');
-    var calendar = new Calendar(calendarEl, {
-        plugins: [dayGridPlugin],
-        
-    })
-    calendar.render();
+$("#planDateSubmit").on("click", function(event){
+
+    event.preventDefault()
+
+    var planStart = new Date($('#mealPlanStart').val())
+    day = planStart.getDate() + 1;
+    month = planStart.getMonth() + 1;
+    year = planStart.getFullYear();
+
+    var planEnd = new Date();
+    planEnd.setDate(planStart.getDate()+7)
+
+    endDay = planEnd.getDate()
+    endMonth = planEnd.getMonth() + 1
+    endYear = planEnd.getFullYear()
+
+    var startDateReadable = [month, day, year].join('/')
+    var endDateReadable = [endMonth, endDay, endYear].join('/')
+
+    console.log("START DATE:", startDateReadable)
+    console.log("END DATE:", endDateReadable)
+
+    var dateHeader = $("<h5>Your plan dates:</h5>")
+    var dates = $("<h5>"+startDateReadable+" - "+endDateReadable+"</h5>")
+
+    $("#planRange").append(dateHeader)
+    $("#planRange").append(dates)
+
+
+    //NOTE: would like to reference dates + minutes available on each day in the NEXT html doc + js file - how do? 
+
+    //Selecting time ranges for each day (using Jquery timepicker)
+
+    
+    // var monMins = parseInt($("#monMins").val())
+    // var tueMins = parseInt($("#monMins").val())
+    // var wedMins = parseInt($("#monMins").val())
+    // var thuMins = parseInt($("#monMins").val())
+    // var friMins = parseInt($("#monMins").val())
+    // var satMins = parseInt($("#monMins").val())
+    // var sunMins = parseInt($("#monMins").val())
+
+    // var totalMins = monMins + tueMins + wedMins + thuMins + friMins + satMins + sunMins
+
+    // console.log("TOTAL USER MINUTES AVAILABLE: ", totalMins)
+
 })
-
-
-var monMins = parseInt($("#monMins").val())
-var tueMins = parseInt($("#monMins").val())
-var wedMins = parseInt($("#monMins").val())
-var thuMins = parseInt($("#monMins").val())
-var friMins = parseInt($("#monMins").val())
-var satMins = parseInt($("#monMins").val())
-var sunMins = parseInt($("#monMins").val())
-
-console.log("Monday Minutes!!: ", monMins)
-console.log(typeof (monMins))
-
-var totalMins = monMins + tueMins + wedMins + thuMins + friMins + satMins + sunMins
-
-console.log("TOTAL USER MINUTES AVAILABLE: ", totalMins)
 
 //idea is to have selectable input boxes which allow user to select time available throughout the week. Recipes returned are then displayed on this page. 
 

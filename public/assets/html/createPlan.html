@@ -11,17 +11,32 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!-- Calendar things -->
-    <link href='/node_modules/@fullcalendar/core/main.css' rel='stylesheet' />
-    <link href='/node_modules/' rel='stylesheet' />
-    <!-- End of Calendar Things -->
+    <!-- calendar -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.css'/>
 
+    <!-- custom css -->
     <link rel="stylesheet" href="/assets/css/styles.css">
+
+    <!-- timepicker -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 </head>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 <body>
 
-    <h1>Input the minutes you are available to cook for each day of the week:</h1>
+    <form>
+        Meal Plan Start Date: <input type="date" id= "mealPlanStart">
+        <input type="submit" id="planDateSubmit">
+    </form>
+    <br>
+    <div id="planRange">
+        <!-- Put the range of the plan (calculated in JS file -->
+    </div>
+
+    <h3>Input the minutes you are available to cook for each day of the week:</h3>
+
+    <input class="timepicker">
 
     <div id='calendar'></div>
 
@@ -67,11 +82,16 @@
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src='http://code.jquery.com/jquery-1.11.3.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- Optional JavaScript -->
     <script src="/assets/js/createPlan.js"></script>
+
+    <!-- Calendar Scripts -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.min.js'></script>
 
 </body>
 
