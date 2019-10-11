@@ -1,4 +1,3 @@
-s
 <!doctype html>
 <html lang="en">
 
@@ -11,23 +10,36 @@ s
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Calendar things -->
+    <link href='/node_modules/@fullcalendar/core/main.css' rel='stylesheet' />
+    <link href='/node_modules/' rel='stylesheet' />
+    <!-- End of Calendar Things -->
+
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
 <body>
 
-    <h1>This is where the user inputs available time</h1>
+    <h1>Input the minutes you are available to cook for each day of the week:</h1>
 
+    <div id='calendar'></div>
 
     <form id="calendarInput">
-        Monday minutes: <input type="text" name="monMins" id="monMins">
+        Monday minutes: <input type="text" name="monMins" id="monMins" value=10>
         <br>
-        Tuesday minutes: <input type="text" name="tueMins" id="tueMins">
+        Tuesday minutes: <input type="text" name="tueMins" id="tueMins" value=10>
         <br>
-        Wednesday minutes: <input type="text" name="wedMins" id="wedMins">
+        Wednesday minutes: <input type="text" name="wedMins" id="wedMins" value=10>
+        <br>
+        Thursday minutes: <input type="text" name="monMins" id="monMins" value=10>
+        <br>
+        Friday minutes: <input type="text" name="tueMins" id="tueMins" value=10>
+        <br>
+        Saturday minutes: <input type="text" name="wedMins" id="wedMins" value=10>
+        <br>
+        Sunday minutes: <input type="text" name="monMins" id="monMins" value=10>
     </form>
-
-
 
     <h1>This is where the user creates plans</h1>
 
@@ -52,8 +64,6 @@ s
 
     <div id="recipesReturned">
         <!-- location where we paste data from our recipes to user -->
-
-
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

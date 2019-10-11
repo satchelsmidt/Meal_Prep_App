@@ -33,18 +33,19 @@ module.exports = function(sequelize, DataTypes) {
     Plan.associate = function(models) {
       // We're saying that a Plan should belong to a User
       // A Plan can't be created without a User due to the foreign key constraint
-
       Plan.belongsTo(models.User, {
-        // foreignKey: 'UserId'
+        foreignKey: {
+          allowNull: false
+        }
       });
 
 
 
-      // Plan.belongsToMany(models.Recipe, {
-      //   as: 'plan',
-      //   through: 'Recipe_Plan',
-      //   foreignKey: 'plan_id'
-      // })
+      Plan.belongsToMany(models.Recipe, {
+        through: 'recipe_plans',
+        // as: 'plan',
+        // foreignKey: 'plan_id'
+      })
 
     };
     return Plan;

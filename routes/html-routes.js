@@ -1,5 +1,4 @@
 //Route users to various html pages
-
 var path = require('path')
 
 // Requiring our custom middleware for checking if a user is logged in
@@ -29,6 +28,10 @@ module.exports = function (app) {
 
     app.get("/createPlan", isAuthenticated, function (req, res) {
         res.sendFile(path.join(__dirname, "../public/assets/html/createPlan.html"))
+    });
+
+    app.get("/finalPlan", isAuthenticated, function (req, res) {
+        res.sendFile(path.join(__dirname, "../public/assets/html/finalPlan.html"))
     });
 
     app.get("/plans", isAuthenticated, function (req, res) {

@@ -1,9 +1,50 @@
-//This file is where we are taking in the data from our refined AJAX call to compose a plan (made up of a select few recipes)
+//This file is where the user selects parameters that will make up their plan
+var planId
 
+$(document).ready(function () {
+    // This file just does a GET request to figure out which plan is currently being worked on
+    $.get("/api/current_plan").then(function (data) {
+        console.log("whatever our data is", data)
+        planId = data[0].id;
+        console.log("THIS SHOULD BE THE ID OF THE CURRENT PLAN:", planId)
+    });
+});
 
 
 
 /////////CALENDAR SECTION////////////
+
+//calendar variables
+import { Calendar } from '@fullcalendar/core';
+
+//THIS IS A PLUGIN
+import dayGridPlugin from '@fullcalendar/daygrid';
+
+document.addEventListener('DOMContentLoaded', function(){
+    var calendarEl = document.getElementById(
+        'calendar');
+    var calendar = new Calendar(calendarEl, {
+        plugins: [dayGridPlugin],
+        
+    })
+    calendar.render();
+})
+
+
+var monMins = parseInt($("#monMins").val())
+var tueMins = parseInt($("#monMins").val())
+var wedMins = parseInt($("#monMins").val())
+var thuMins = parseInt($("#monMins").val())
+var friMins = parseInt($("#monMins").val())
+var satMins = parseInt($("#monMins").val())
+var sunMins = parseInt($("#monMins").val())
+
+console.log("Monday Minutes!!: ", monMins)
+console.log(typeof (monMins))
+
+var totalMins = monMins + tueMins + wedMins + thuMins + friMins + satMins + sunMins
+
+console.log("TOTAL USER MINUTES AVAILABLE: ", totalMins)
 
 //idea is to have selectable input boxes which allow user to select time available throughout the week. Recipes returned are then displayed on this page. 
 
@@ -87,7 +128,7 @@ $("#recipeSearch").on("click", function () {
 
             recipeLink = data.results[i].sourceUrl
             console.log("LINK: ", recipeLink)
-            var link = $("<a target='_blank' href='"+recipeLink+"'>"+"Recipe Link"+"</a>")
+            var link = $("<a target='_blank' href='" + recipeLink + "'>" + "Recipe Link" + "</a>")
             recipeDiv.append(link)
 
             //
@@ -110,7 +151,7 @@ $("#recipeSearch").on("click", function () {
             console.log("SERVINGS: ", recipeServings)
             var servings = $("<p>").append("Servings: ", recipeServings, " servings")
             recipeDiv.append(servings)
-            
+
             //
             ingredientsArr = []
             stepsArr = []
@@ -165,24 +206,25 @@ $("#recipeSearch").on("click", function () {
         //This button will:
         //Take user to a new page ('plan' or similar)
         //aggregate all the recipes that have been selected and added on this page
-            //HOW TO DO???
+        //HOW TO DO???
         //'GET' the data from those recipes and display them on a visual calendar on the next page
-        
+
         //PLANS api should:
-            //take in total minutes that user has on various days
+        //take in total minutes that user has on various days
     })
 })
 
 
 //modify below code to create new plan and add each recipe to plan+recipe table
-
-
+var recipeIdArr = []
+var totalRecipeMins = 0
+var count = 1
 
 $(document).on("click", ".addRecipe", function (event) {
 
-    console.log("CLICKED A BUTTON")
+    console.log("COUNT OF YOUR COUNT VARIABLE:", count)
+    $(this).attr("disabled", true)
     event.preventDefault()
-   
 
     var theActualRecipeTitle = $(this).data("title")
     var theActualRecipeImage = $(this).data("img")
@@ -201,14 +243,62 @@ $(document).on("click", ".addRecipe", function (event) {
         recipe_time: theActualRecipeTime,
         recipe_servings: theActualRecipeServings,
         recipe_ingredients: theActualRecipeIngredients,
-        recipe_steps: theActualRecipeSteps
+        recipe_steps: theActualRecipeSteps,
     }
     console.log(recipeDetails)
 
     $.post("/api/recipes", recipeDetails, function (data) {
         console.log("THIS IS YOUR DATA:", data)
+    }).then(function () {
+
+        for (let i = count; i > 0; i--) {
+            $.get("/api/recipes_desc").then(function (data) {
+
+                console.log("time for each recipe: ", parseInt(data[0].recipe_time))
+
+                totalRecipeMins = totalRecipeMins + parseInt(data[0].recipe_time)
+
+                if (totalRecipeMins > totalMins) {
+                    alert('Adding this recipe to plan would exceed total available time for the week')
+                    //figure out how to change 'disabled' attribute to false before function returns (so that un-addable recipe can be clicked still)
+                    return
+                }
+
+                console.log("This is your data (desc_id):", data)
+                recipeIdArr.push(data[0].id);
+
+                console.log("THIS SHOULD BE THE array of recipes we have selected:", recipeIdArr)
+                console.log("total Recipes selected time: ", totalRecipeMins)
+
+            })
+        }
     })
+
+});
+
+
+$(document).on("click", "#createPlan", function (event) {
+
+    console.log("CLICKED A BUTTON (create plan)")
+    event.preventDefault()
+
+    for (let i = 0; i < recipeIdArr.length; i++) {
+
+        var planRecipeDetails = {
+            RecipeId: recipeIdArr[i],
+            PlanId: planId
+        }
+
+        console.log("Data we are sending:", planRecipeDetails)
+
+
+        $.post("/api/recipe_plans", planRecipeDetails, function (data) {
+            console.log("reached post request")
+            console.log("THIS IS YOUR DATA(list of recipes selected + linked plans?):", data)
+        })
+    }
 })
+
 
 //TODO:
 

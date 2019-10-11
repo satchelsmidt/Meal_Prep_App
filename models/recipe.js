@@ -14,18 +14,18 @@ module.exports = function (sequelize, DataTypes) {
     });
 
   Recipe.associate = function (models) {
-    Recipe.belongsTo(models.Plan, {
-      foreignKey: {
-        allowNull: true
-      }
+    // Recipe.belongsTo(models.Plan, {
+    //   foreignKey: {
+    //     allowNull: true
+    //   }
+    // })
+
+    Recipe.belongsToMany(models.Plan, {
+      through: 'recipe_plans',
+      // as: 'recipe',
+      // foreignKey: 'recipe_id'
     })
   }
-
-  // Recipe.belongsToMany(models.Plan, {
-  //   as: 'recipe',
-  //   through: 'Recipe_Plan',
-  //   foreignKey: 'recipe_id'
-  // })
 
   // };
   return Recipe;
