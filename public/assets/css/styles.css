@@ -3,9 +3,35 @@
     margin: 0 auto;
   }
 
-  /* body {
+  body {
     margin: 40px 10px;
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 14px;
-  } */
+    background-color:olive
+  }
+
+  .container{
+    background-color: lightblue;
+    display: inline-block;
+    width: auto; 
+    overflow: auto;
+    padding-top: 8px;
+    border-radius: 25px;    
+    margin-top: 20px;
+  }
+
+  .row{
+    width: 500px;
+    padding: 20px;
+  }
+
+  .btn-default{
+    background-color: lightgray;
+    border-radius: 25px;
+  }
+
+  #header{
+    margin-top: 0px;
+    padding-top: 0px;
+  }

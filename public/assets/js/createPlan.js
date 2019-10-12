@@ -10,20 +10,110 @@ $(document).ready(function () {
     });
 
     //initialize timepicker plugin from JQuery
-    $('.timepicker').timepicker({
-        timeFormat: 'HH:mm:ss',
-        interval: 60,
-        minTime: '10',
-        maxTime: '6:00pm',
-        defaultTime: '11',
-        startTime: '10:00',
-        dynamic: false,
-        dropdown: true,
-        scrollbar: true
-    });
+    // $('.timepicker').timepicker({
+    //     timeFormat: 'HH:mm:ss',
+    //     interval: 60,
+    //     minTime: '10',
+    //     maxTime: '6:00pm',
+    //     defaultTime: '11',
+    //     startTime: '10:00',
+    //     dynamic: false,
+    //     dropdown: true,
+    //     scrollbar: true
+    // });
+
 });
 
+$("#timeButton").on("click", function(){
+    console.log("clicked one more button")
 
+    // var monOne = $("#monOne").val()
+    // var monTwo = $("#monTwo").val()
+
+    function Converttimeformat() {
+
+        // var time = $("#starttime").val();
+        var time = document.getElementById('monOne').value;
+        console.log("time from func:", time)
+        var hrs = Number(time.match(/^(\d+)/)[1]);
+        console.log("hrs from func:", hrs)
+
+        var mnts = Number(time.match(/:(\d+)/)[1]);
+        console.log("mnts from func:", mnts)
+
+        var format = time.match(/\s(.*)$/)[1];
+        console.log("format from func:", format)
+
+        if (format == "PM" && hrs < 12) hrs = hrs + 12;
+        if (format == "AM" && hrs == 12) hrs = hrs - 12;
+    
+        var hours =hrs.toString();    
+        var minutes = mnts.toString();
+
+        if (hrs < 10) hours = "0" + hours;
+        if (mnts < 10) minutes = "0" + minutes;
+        //alert(hours + ":" + minutes);
+        var date1 = new Date();
+
+        date1.setHours(hours );
+        date1.setMinutes(minutes);
+
+        //alert(date1);
+        var time = document.getElementById('monTwo').value;
+        var hrs = Number(time.match(/^(\d+)/)[1]);
+        var mnts = Number(time.match(/:(\d+)/)[1]);
+        var format = time.match(/\s(.*)$/)[1];
+
+        if (format == "PM" && hrs < 12) hrs = hrs + 12;
+        if (format == "AM" && hrs == 12) hrs = hrs - 12;
+        
+        var hours = hrs.toString();
+        var minutes = mnts.toString();
+
+        if (hrs < 10) hours = "0" + hours;
+        if (mnts < 10) minutes = "0" + minutes;
+
+        //alert(hours+ ":" + minutes);
+        var date2 = new Date();
+        date2.setHours(hours );
+        date2.setMinutes(minutes);
+
+        //alert(date2);
+        var diff = date2.getTime() - date1.getTime();
+        
+        var hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+         
+        var mins = Math.floor(diff / (1000 * 60));
+        diff -= mins * (1000 * 60);
+
+        alert( hours + " hours : " + mins + " minutes : " );
+        }
+        
+    Converttimeformat()
+
+    var tueOne = $("#tueOne").val()
+    var tueTwo = $("#tueTwo").val()
+
+    var wedOne = $("#wedOne").val()
+    var wedTwo = $("#wedTwo").val()
+
+    var thuOne = $("#thuOne").val()
+    var thuTwo = $("#thuTwo").val()
+
+    var friOne = $("#friOne").val()
+    var friTwo = $("#friTwo").val()
+
+    var satOne = $("#satOne").val()
+    var satTwo = $("#satTwo").val()
+
+    var sunOne = $("#sunOne").val()
+    var sunTwo = $("#sunTwo").val()
+
+    console.log("first monday time test", monOne)
+    console.log("first monday time test", monTwo)
+    
+})
 
 /////////CALENDAR SECTION////////////
 
@@ -296,11 +386,11 @@ $(document).on("click", ".addRecipe", function (event) {
 
                 totalRecipeMins = totalRecipeMins + parseInt(data[0].recipe_time)
 
-                if (totalRecipeMins > totalMins) {
-                    alert('Adding this recipe to plan would exceed total available time for the week')
-                    //figure out how to change 'disabled' attribute to false before function returns (so that un-addable recipe can be clicked still)
-                    return
-                }
+                // if (totalRecipeMins > totalMins) {
+                //     alert('Adding this recipe to plan would exceed total available time for the week')
+                //     //figure out how to change 'disabled' attribute to false before function returns (so that un-addable recipe can be clicked still)
+                //     return
+                // }
 
                 console.log("This is your data (desc_id):", data)
                 recipeIdArr.push(data[0].id);
@@ -319,6 +409,7 @@ $(document).on("click", "#createPlan", function (event) {
 
     console.log("CLICKED A BUTTON (create plan)")
     event.preventDefault()
+    location.href = "/finalPlan"
 
     for (let i = 0; i < recipeIdArr.length; i++) {
 
