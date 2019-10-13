@@ -30,7 +30,6 @@ module.exports = function (sequelize, DataTypes) {
   //Associating each user with a number of plans made by them. Deleting a user deletes all associated plans
   User.associate = function (models) {
     User.hasMany(models.Plan, {
-      // foreignKey: 'UserId',
       onDelete: "cascade"
     });
   };

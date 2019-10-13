@@ -45,18 +45,20 @@ module.exports = function (app) {
     })
 
  //api route to return all plans created by current user
- app.get("/api/all_plans", function (req, res) {
-
-    var query = {};
-    if (req.query.UserId) {
-      query.UserId = req.query.UserId;
-    }
+ app.get("/api/all_plans/:UserId", function (req, res) {
+    console.log("req.params back end:", req.params)
+    // var query = {};
+    // if (req.query.UserId) {
+    //   query.UserId = req.query.UserId;
+    // }
     //TODO: modify this query to be able to return all plans tied to CURRENT user id
     //right now, returns max plan id (which will always be the one just created, which is fine for create plan purposes but not long term)
     db.Plan.findAll(
         // req.body, 
-        {where: query,
-        include: [db.User],
+        {where: {
+            UserId: req.params.UserId
+        }
+        // include: [db.User],
     
     }).then(function (data) {
         console.log("all plans:", data)

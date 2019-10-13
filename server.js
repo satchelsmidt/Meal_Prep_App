@@ -2,7 +2,7 @@
 var express = require('express');
 var session = require('express-session');
 
-// require("dotenv").config();
+require("dotenv").config();
 
 var passport = require("./config/passport.js")
 
@@ -10,9 +10,6 @@ var db = require("./models")
 
 var PORT = process.env.PORT || 3000;
 var app = express();
-
-
-
 
 //setup middleware
 app.use(express.urlencoded({extended: true}));
@@ -26,16 +23,11 @@ app.use(session({ secret: "keyboard cat?", resave: true, saveUninitialized: true
 app.use(passport.initialize());
 app.use(passport.session());
 
-//AREA WHERE WE REQUIRE VARIOUS ROUTE FUNCTIONS
-
-//TODO: input the various route functions
-
+//Routes
 require("./routes/plan-api-routes.js")(app)
 require("./routes/recipe-api-routes.js")(app)
 require("./routes/user-api-routes.js")(app)
 require("./routes/html-routes.js")(app)
-
-// app.use(recipeRoutes)
 
 //Sync up database via sequelize before loading page
 db.sequelize.sync({force: false}).then(function(){

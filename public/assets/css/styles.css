@@ -8,11 +8,17 @@
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 14px;
-    background-color:olive
+    background-color:#80BD9E;
+    background: url("../images/alternate.jpg") no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  div{
+    background-color: #F98866;
   }
 
   .container{
-    background-color: lightblue;
+    background-color: #89DA59;
     display: inline-block;
     width: auto; 
     overflow: auto;

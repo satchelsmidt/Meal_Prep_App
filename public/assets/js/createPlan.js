@@ -1,133 +1,17 @@
 //This file is where the user selects parameters that will make up their plan
+//Declare plan id number globally
 var planId
 
 $(document).ready(function () {
-    // This file just does a GET request to figure out which plan is currently being worked on
+    //GET request to determine which plan is currently being worked on
     $.get("/api/current_plan").then(function (data) {
-        console.log("whatever our data is", data)
+        console.log("Data: ", data)
         planId = data[0].id;
-        console.log("THIS SHOULD BE THE ID OF THE CURRENT PLAN:", planId)
+        console.log("ID OF THE CURRENT PLAN:", planId)
     });
-
-    //initialize timepicker plugin from JQuery
-    // $('.timepicker').timepicker({
-    //     timeFormat: 'HH:mm:ss',
-    //     interval: 60,
-    //     minTime: '10',
-    //     maxTime: '6:00pm',
-    //     defaultTime: '11',
-    //     startTime: '10:00',
-    //     dynamic: false,
-    //     dropdown: true,
-    //     scrollbar: true
-    // });
-
 });
 
-$("#timeButton").on("click", function(){
-    console.log("clicked one more button")
-
-    // var monOne = $("#monOne").val()
-    // var monTwo = $("#monTwo").val()
-
-    function Converttimeformat() {
-
-        // var time = $("#starttime").val();
-        var time = document.getElementById('monOne').value;
-        console.log("time from func:", time)
-        var hrs = Number(time.match(/^(\d+)/)[1]);
-        console.log("hrs from func:", hrs)
-
-        var mnts = Number(time.match(/:(\d+)/)[1]);
-        console.log("mnts from func:", mnts)
-
-        var format = time.match(/\s(.*)$/)[1];
-        console.log("format from func:", format)
-
-        if (format == "PM" && hrs < 12) hrs = hrs + 12;
-        if (format == "AM" && hrs == 12) hrs = hrs - 12;
-    
-        var hours =hrs.toString();    
-        var minutes = mnts.toString();
-
-        if (hrs < 10) hours = "0" + hours;
-        if (mnts < 10) minutes = "0" + minutes;
-        //alert(hours + ":" + minutes);
-        var date1 = new Date();
-
-        date1.setHours(hours );
-        date1.setMinutes(minutes);
-
-        //alert(date1);
-        var time = document.getElementById('monTwo').value;
-        var hrs = Number(time.match(/^(\d+)/)[1]);
-        var mnts = Number(time.match(/:(\d+)/)[1]);
-        var format = time.match(/\s(.*)$/)[1];
-
-        if (format == "PM" && hrs < 12) hrs = hrs + 12;
-        if (format == "AM" && hrs == 12) hrs = hrs - 12;
-        
-        var hours = hrs.toString();
-        var minutes = mnts.toString();
-
-        if (hrs < 10) hours = "0" + hours;
-        if (mnts < 10) minutes = "0" + minutes;
-
-        //alert(hours+ ":" + minutes);
-        var date2 = new Date();
-        date2.setHours(hours );
-        date2.setMinutes(minutes);
-
-        //alert(date2);
-        var diff = date2.getTime() - date1.getTime();
-        
-        var hours = Math.floor(diff / (1000 * 60 * 60));
-        diff -= hours * (1000 * 60 * 60);
-         
-        var mins = Math.floor(diff / (1000 * 60));
-        diff -= mins * (1000 * 60);
-
-        alert( hours + " hours : " + mins + " minutes : " );
-        }
-        
-    Converttimeformat()
-
-    var tueOne = $("#tueOne").val()
-    var tueTwo = $("#tueTwo").val()
-
-    var wedOne = $("#wedOne").val()
-    var wedTwo = $("#wedTwo").val()
-
-    var thuOne = $("#thuOne").val()
-    var thuTwo = $("#thuTwo").val()
-
-    var friOne = $("#friOne").val()
-    var friTwo = $("#friTwo").val()
-
-    var satOne = $("#satOne").val()
-    var satTwo = $("#satTwo").val()
-
-    var sunOne = $("#sunOne").val()
-    var sunTwo = $("#sunTwo").val()
-
-    console.log("first monday time test", monOne)
-    console.log("first monday time test", monTwo)
-    
-})
-
-/////////CALENDAR SECTION////////////
-
-// $(document).ready(function(){
-//     $('#calendar').fullCalendar({
-//         defaultView: 'agendaWeek',
-//         editable: true
-//     })
-// })
-
-//////////////////////////////////////
-
-$("#planDateSubmit").on("click", function(event){
-
+$("#planDateSubmit").on("click", function (event) {
     event.preventDefault()
 
     var planStart = new Date($('#mealPlanStart').val())
@@ -136,50 +20,85 @@ $("#planDateSubmit").on("click", function(event){
     year = planStart.getFullYear();
 
     var planEnd = new Date();
-    planEnd.setDate(planStart.getDate()+7)
+    planEnd.setDate(planStart.getDate() + 7)
 
-    endDay = planEnd.getDate()
-    endMonth = planEnd.getMonth() + 1
-    endYear = planEnd.getFullYear()
+    function getDates(planStart, planEnd) {
+        var dateHeader = $("<h5>Input the time you are available to Prep each day:</h5>")
+        $("#planRange").prepend(dateHeader)
 
-    var startDateReadable = [month, day, year].join('/')
-    var endDateReadable = [endMonth, endDay, endYear].join('/')
+        var dateArray = []
+        var dayArray = []
 
-    console.log("START DATE:", startDateReadable)
-    console.log("END DATE:", endDateReadable)
+        var currentDate = moment(planStart).add(1, 'days');
 
-    var dateHeader = $("<h5>Your plan dates:</h5>")
-    var dates = $("<h5>"+startDateReadable+" - "+endDateReadable+"</h5>")
+        var beginPlan = currentDate.format("YYYY-MM-DD")
+        console.log("CURRENT DATE (store locally)", beginPlan)
+        localStorage.setItem("planStart", beginPlan)
 
-    $("#planRange").append(dateHeader)
-    $("#planRange").append(dates)
+        var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
+        console.log("plan end date in YYYY-MM-DD format:", endPlan)
+        localStorage.setItem("planEnd", endPlan)
+
+        var stopDate = moment(planEnd).add(1, 'days')
+        while (currentDate <= stopDate) {
+            dayArray.push(moment(currentDate).format('dddd'))
+            // dateArray.push(moment(currentDate).format("MM-DD-YYYY"))
+            dateArray.push(moment(currentDate).format("YYYY-MM-DD"))
+
+            // timeStartArray.push(moment(currentDate).format("HH"))
+            // timeEndArray.push(moment(currentDate).format("HH"))
 
 
-    //NOTE: would like to reference dates + minutes available on each day in the NEXT html doc + js file - how do? 
+            currentDate = moment(currentDate).add(1, 'days')
+        }
 
-    //Selecting time ranges for each day (using Jquery timepicker)
+        localStorage.setItem("dayArray", dayArray)
+        localStorage.setItem("dateArray", dateArray)
+        console.log(dayArray)
+        console.log(dateArray)
 
-    
-    // var monMins = parseInt($("#monMins").val())
-    // var tueMins = parseInt($("#monMins").val())
-    // var wedMins = parseInt($("#monMins").val())
-    // var thuMins = parseInt($("#monMins").val())
-    // var friMins = parseInt($("#monMins").val())
-    // var satMins = parseInt($("#monMins").val())
-    // var sunMins = parseInt($("#monMins").val())
+        for (let i = 0; i < dateArray.length; i++) {
+            var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + " <input type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input type='time' id='time" + i + "02' data-time='" + i + "02'></input>" + "</li>" + "<br>")
+            date.attr("id", "date")
 
-    // var totalMins = monMins + tueMins + wedMins + thuMins + friMins + satMins + sunMins
+            $("#dates").append(date)
+        }
+    }
+    getDates(planStart, planEnd)
 
-    // console.log("TOTAL USER MINUTES AVAILABLE: ", totalMins)
+    var submitTimes = $("<button>")
+    submitTimes.attr("id", "submitTimes")
+    submitTimes.text("Submit Times")
 
+    $("#planRange").append(submitTimes)
 })
 
-//idea is to have selectable input boxes which allow user to select time available throughout the week. Recipes returned are then displayed on this page. 
+//Function that calculates available time throughout the week for the user based on inputs above
+$(document).on("click", "#submitTimes", function (event) {
+    var timeStartArray = []
+    var timeEndArray = []
 
-//////END CALENDAR SECTION/////////////
+    for (let i = 6; i >= 0; i--) {
+        // Section where we calculate available timeslots to input on Calendar next page
+        var timeOne = $(("#time" + i + "01")).val()
+        console.log("time one:", timeOne)
+        timeStartArray.push(timeOne)
+
+        var timeTwo = $(("#time" + i + "02")).val()
+        console.log("time two:", timeTwo)
+
+        timeEndArray.push(timeTwo)
+    }
+
+    localStorage.setItem("timeStartArray", timeStartArray)
+    localStorage.setItem("timeEndArray", timeEndArray)
+    console.log('array of start times: ', timeStartArray)
+    console.log('array of end times: ', timeEndArray)
+
+});
 
 //cuisine types to include in search (can be comma separated list)
-//Begins as empty and cuisings are added, separated by commas as necessary
+//Begins as empty and cuisines are added, separated by commas as necessary
 var cuisines = ""
 
 //function that occurs on click of any cuisine button, adds type of cuisine on button to AJAX query
@@ -298,12 +217,10 @@ $("#recipeSearch").on("click", function () {
             console.log("INGREDIENTS ARR (STRING):", ingredientsArr.toString())
 
             ingredientsArr = ingredientsArr.toString();
-            // var ingredientsList = $("<p>").append("Ingredients: ", ingredientsArr)
-            // recipeDiv.append(ingredientsList)
-            //
-            //STEPS INFORMATION (DON't NEED TO DISPLAY)
+
+            // Not displaying this data
             stepsArr = stepsArr.toString()
-            console.log("Array of various steps:", stepsArr)
+            console.log("Array of steps:", stepsArr)
 
             //Append 'add to plan' button
             var addRecipe = $("<button>")
@@ -323,6 +240,8 @@ $("#recipeSearch").on("click", function () {
             recipeDiv.append(addRecipe)
 
             $("#recipesReturned").append(recipeDiv)
+            $("#recipesReturned").append($("<br>"))
+            $("#recipesReturned").append($("<br>"))
         }
 
         var createPlan = $("<button>")
@@ -331,19 +250,9 @@ $("#recipeSearch").on("click", function () {
 
         $("#recipesReturned").append($("<br>"))
         $("#recipesReturned").append(createPlan)
-        //This button will:
-        //Take user to a new page ('plan' or similar)
-        //aggregate all the recipes that have been selected and added on this page
-        //HOW TO DO???
-        //'GET' the data from those recipes and display them on a visual calendar on the next page
-
-        //PLANS api should:
-        //take in total minutes that user has on various days
     })
 })
 
-
-//modify below code to create new plan and add each recipe to plan+recipe table
 var recipeIdArr = []
 var totalRecipeMins = 0
 var count = 1
@@ -397,13 +306,10 @@ $(document).on("click", ".addRecipe", function (event) {
 
                 console.log("THIS SHOULD BE THE array of recipes we have selected:", recipeIdArr)
                 console.log("total Recipes selected time: ", totalRecipeMins)
-
             })
         }
     })
-
 });
-
 
 $(document).on("click", "#createPlan", function (event) {
 
@@ -420,7 +326,6 @@ $(document).on("click", "#createPlan", function (event) {
 
         console.log("Data we are sending:", planRecipeDetails)
 
-
         $.post("/api/recipe_plans", planRecipeDetails, function (data) {
             console.log("reached post request")
             console.log("THIS IS YOUR DATA(list of recipes selected + linked plans?):", data)
@@ -428,9 +333,7 @@ $(document).on("click", "#createPlan", function (event) {
     }
 })
 
-
 //TODO:
-
 //1. cuisine types to NOT include in search (can be comma separated list). Similar construction to existing params
 var dontLike = "Greek"
 

@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: true
       },
-      //NOT SURE IF I NEED (minutes available each day -- seems like necessary to accurately place recipes):
+      //Will likely need: Minutes available/Hours available each day
       //mMins
       //tMins
       //wMins
@@ -39,12 +39,8 @@ module.exports = function(sequelize, DataTypes) {
         }
       });
 
-
-
       Plan.belongsToMany(models.Recipe, {
         through: 'recipe_plans',
-        // as: 'plan',
-        // foreignKey: 'plan_id'
       })
 
     };

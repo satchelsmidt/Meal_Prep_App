@@ -1,65 +1,68 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Home Page</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+<head>
+  <title>Home Page</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  </head>
-  <body>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/styles.css">
 
-    <!-- Logout capabilities in header -->
-      <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="/logout">
-                Logout
-              </a>
-            </div>
-          </div>
-        </nav>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
 
-      
-    <h1>Welcome to the world's best meal prep application</h1>
+<body>
+  <!-- Logout capabilities in header -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/logout">
+          Logout
+        </a>
+      </div>
+    </div>
+  </nav>
 
-    <p>Questions:
-    how many html pages should I have for all of these functions? 
+  <h1>Meal Prepper</h1>
+  <h4>The world's most efficient meal planner!</h4>
 
-    This is the page that the user sees when they first enter the site. It has two states:
-      if a user is logged in, it will show options to:
-       - 'create plan' which takes user to create plan page.
-       - 'view plans' which takes user to page with list of created plans.
-
-       if a user is not logged in, they will have two options:
-       - 'log in', which lets them log in (with google?)
-       - 'create profile', which takes them to user.html
-      </p>
-
-
-      <!-- log in conditions -->
-      <div>
-      
-      <a href="plans">
+  <!-- Div containing buttons to either view all user created plans, or create a new plan -->
+  <div>
+    <a href="plans">
       <button id="buttonOne">View Plans</button>
-      </a>
+    </a>
 
-      <a href="createPlan">
-        <button id="createPlan">Create Plan</button>
-      </a>
+    <a href="createPlan">
+      <button id="createPlan">Create Plan</button>
+    </a>
+  </div>
 
-     </div>
+  <!-- Footer -->
+  <footer class="page-footer font-small blue pt-4">
+    <div class="container-fluid text-center text-md-left">
+      <hr class="clearfix w-100 d-md-none pb-3">
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+        <!-- Footer Links -->
+        <a href="#">API Things</a> |
+        <a href="#">Github Repo</a>
+        <span>
+          <p>© 2019 Copyright: Satchel Smidt</p>
+        </span>
+      </div>
+    </div>
+  </footer>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- SCRIPTS -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <!-- Optional JavaScript -->
-    <script src="/assets/js/userOnly.js"></script>
-  </body>
+  <!-- Optional JavaScript -->
+  <script src="/assets/js/userOnly.js"></script>
+</body>
+
 </html>
