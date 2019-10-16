@@ -5,9 +5,6 @@ var session = require('express-session');
 //dotenv to store environment variables (DB-related)
 require("dotenv").config();
 
-
-
-
 var passport = require("./config/passport.js")
 
 var db = require("./models")
