@@ -10,13 +10,20 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: true
       },
       //Will likely need: Minutes available/Hours available each day
-      //mMins
-      //tMins
-      //wMins
-      //thMins
-      //fMins
-      //sMins
-      //suMins
+      //dayOneStart
+      //dayOneEnd
+      //dayTwoStart
+      //dayTwoEnd
+      //dayThreeStart
+      //dayThreeEnd
+      //dayFourStart
+      //dayFourEnd
+      //dayFiveStart
+      //dayFiveEnd
+      //daySixStart
+      //daySixEnd
+      //daySevenStart
+      //daySevenEnd
       maxMins: 
       {
         type: DataTypes.INTEGER,

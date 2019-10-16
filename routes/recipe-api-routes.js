@@ -40,7 +40,6 @@ module.exports = function (app) {
         }).then(function (dbPlan) {
 
             console.log("db PLAN:", dbPlan)
-            console.log('see if this returns SECOND RECIPE SELECTED', dbPlan[0].Recipes[1])
 
             var recipeArr = []
 
@@ -51,6 +50,7 @@ module.exports = function (app) {
                 recipeArr.push(recipeData)
                 console.log("this is your array of recipes: ", recipeData)
             }
+            res.json(dbPlan[0].id)
             res.json(recipeArr)
         })
     });

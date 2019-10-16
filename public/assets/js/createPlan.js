@@ -2,6 +2,11 @@
 //Declare plan id number globally
 var planId
 
+var dateArray = []
+var dayArray = []
+var timeStartArray = []
+var timeEndArray = []
+
 $(document).ready(function () {
     //GET request to determine which plan is currently being worked on
     $.get("/api/current_plan").then(function (data) {
@@ -15,45 +20,51 @@ $("#planDateSubmit").on("click", function (event) {
     event.preventDefault()
 
     var planStart = new Date($('#mealPlanStart').val())
-    day = planStart.getDate() + 1;
-    month = planStart.getMonth() + 1;
-    year = planStart.getFullYear();
+    console.log(planStart)
+    // day = planStart.getDate() + 1;
+    // month = planStart.getMonth() + 1;
+    // year = planStart.getFullYear();
 
     var planEnd = new Date();
-    planEnd.setDate(planStart.getDate() + 7)
+    planEnd.setDate(planStart.getDate() + 6)
 
     function getDates(planStart, planEnd) {
         var dateHeader = $("<h5>Input the time you are available to Prep each day:</h5>")
         $("#planRange").prepend(dateHeader)
 
-        var dateArray = []
-        var dayArray = []
+        // var dateArray = []
+        // var dayArray = []
 
-        var currentDate = moment(planStart).add(1, 'days');
+        //var currentDate = moment(planStart).add(1, 'days');
+        var currentDate = moment(planStart)
 
         var beginPlan = currentDate.format("YYYY-MM-DD")
         console.log("CURRENT DATE (store locally)", beginPlan)
-        localStorage.setItem("planStart", beginPlan)
 
-        var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
+        // localStorage.setItem("planStart", beginPlan)
+        sessionStorage.setItem("planStart", beginPlan)
+
+
+        // var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
+        var endPlan = moment(planEnd).format("YYYY-MM-DD")
         console.log("plan end date in YYYY-MM-DD format:", endPlan)
-        localStorage.setItem("planEnd", endPlan)
 
-        var stopDate = moment(planEnd).add(1, 'days')
+        // localStorage.setItem("planEnd", endPlan)
+        sessionStorage.setItem("planEnd", endPlan)
+
+
+         // var stopDate = moment(planEnd).add(1, 'days')
+        var stopDate = moment(planEnd)
         while (currentDate <= stopDate) {
             dayArray.push(moment(currentDate).format('dddd'))
-            // dateArray.push(moment(currentDate).format("MM-DD-YYYY"))
             dateArray.push(moment(currentDate).format("YYYY-MM-DD"))
-
-            // timeStartArray.push(moment(currentDate).format("HH"))
-            // timeEndArray.push(moment(currentDate).format("HH"))
-
-
             currentDate = moment(currentDate).add(1, 'days')
         }
 
-        localStorage.setItem("dayArray", dayArray)
-        localStorage.setItem("dateArray", dateArray)
+        // localStorage.setItem("dayArray", dayArray)
+        // localStorage.setItem("dateArray", dateArray)
+        sessionStorage.setItem("dayArray", dayArray)
+        sessionStorage.setItem("dateArray", dateArray)
         console.log(dayArray)
         console.log(dateArray)
 
@@ -75,8 +86,8 @@ $("#planDateSubmit").on("click", function (event) {
 
 //Function that calculates available time throughout the week for the user based on inputs above
 $(document).on("click", "#submitTimes", function (event) {
-    var timeStartArray = []
-    var timeEndArray = []
+    // var timeStartArray = []
+    // var timeEndArray = []
 
     for (let i = 6; i >= 0; i--) {
         // Section where we calculate available timeslots to input on Calendar next page
@@ -90,8 +101,11 @@ $(document).on("click", "#submitTimes", function (event) {
         timeEndArray.push(timeTwo)
     }
 
-    localStorage.setItem("timeStartArray", timeStartArray)
-    localStorage.setItem("timeEndArray", timeEndArray)
+    // localStorage.setItem("timeStartArray", timeStartArray)
+    // localStorage.setItem("timeEndArray", timeEndArray)
+    
+    sessionStorage.setItem("timeStartArray", timeStartArray)
+    sessionStorage.setItem("timeEndArray", timeEndArray)
     console.log('array of start times: ', timeStartArray)
     console.log('array of end times: ', timeEndArray)
 
@@ -150,6 +164,38 @@ $("#recipeSearch").on("click", function () {
         method: "GET"
     }).then(function (data) {
         console.log("Data Returned: ", data)
+
+        //TEST THIS
+
+        // recipeDiv = $("<div>")
+        // recipeDiv.attr("class", "uniqueRecipe")
+
+        // let output = $("<div class='row'>")
+
+        // for (let i = 0; i < data.results.length; i++) {
+        //     recipeImg = data.results[i].image
+
+        //     // <div class="row">
+        //     output += `
+        //     <div class="col s12 m6">
+        //       <div class="card">
+        //         <div class="card-image">
+        //           <img src="${recipeImg}" class="card-img-top">
+        //           <span class="card-title">Card Title</span>
+        //           <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        //         </div>
+        //         <div class="card-content">
+        //           <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        //         </div>
+        //       </div>
+        //     </div>
+        //     `
+        //     /* </div> */
+        //     output += $("</div>")
+
+        //     recipeDiv.append(output)
+        // }
+
 
         //For loop to iterate through returned recipes
         for (let i = 0; i < data.results.length; i++) {

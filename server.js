@@ -2,7 +2,11 @@
 var express = require('express');
 var session = require('express-session');
 
-require("dotenv").config();
+// require("dotenv").config();
+
+// apiKey = process.env.API_KEY;
+
+// localStorage.setItem("apiKey", apiKey)
 
 var passport = require("./config/passport.js")
 

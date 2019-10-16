@@ -13,18 +13,66 @@
     background-size: cover;
   }
 
-  div{
-    background-color: #F98866;
+  #header{
+    background-color: slategray;
+    opacity: .90;
+    padding: 5px;
+    margin-bottom: 0px;
+  }
+
+  /* img{
+    height: 200px;
+    width: 200px;
+  } */
+
+  #planRange{
+      background-color: slategray;
+      opacity: .90;
+      padding: 5px;
+      margin-bottom: 0px;
+  }
+
+  #subheader{
+    background-color: slategray;
+    opacity: .90;
+    padding: 5px;
+    margin-top:0px;
+  }
+
+  footer{
+    background-color: slategray;
+    opacity: .90;
+    align-content: center;
+    padding: 5px;
+    margin-top: 0px;
   }
 
   .container{
-    background-color: #89DA59;
-    display: inline-block;
-    width: auto; 
+    background-color: slategray;
+    /* display: inline-block; */
+    /* position: relative; */
+    margin: 0 auto; 
+    width: 500px;
     overflow: auto;
     padding-top: 8px;
     border-radius: 25px;    
     margin-top: 20px;
+    align-content: center;
+    opacity: .90;
+  }
+
+  /* .navbar{
+    background-color: slategray;
+    opacity: .90;
+    display: inline-block;
+  } */
+
+  /* .navbar_brand{
+    color: black;
+  } */
+
+  a{
+    color: black;
   }
 
   .row{
@@ -37,7 +85,12 @@
     border-radius: 25px;
   }
 
-  #header{
+  button .dietButton .cuisineButton #recipeSearch{
+    background-color: lightgray;
+    border-radius: 25px;
+  }
+
+  /* #header{
     margin-top: 0px;
     padding-top: 0px;
-  }
+  } */

@@ -6,20 +6,31 @@ var ingredients
 
 var finalRecipeDiv
 
-var planStart = localStorage.getItem("planStart")
-var planEnd = localStorage.getItem("planEnd")
+// var planStart = localStorage.getItem("planStart")
+// var planEnd = localStorage.getItem("planEnd")
+var planStart = sessionStorage.getItem("planStart")
+var planEnd = sessionStorage.getItem("planEnd")
 
-var dateArray = localStorage.getItem("dateArray")
+// var dateArray = localStorage.getItem("dateArray")
+var dateArray = sessionStorage.getItem("dateArray")
 var actualDateArray = dateArray.split(',')
 
-var dayArray = localStorage.getItem("dayArray")
+
+// var dayArray = localStorage.getItem("dayArray")
+var dayArray = sessionStorage.getItem("dayArray")
+
 var actualDayArray = dayArray.split(',')
 
-var timeStartArray = localStorage.getItem("timeStartArray")
+// var timeStartArray = localStorage.getItem("timeStartArray")
+var timeStartArray = sessionStorage.getItem("timeStartArray")
 var actualTimeStartArray = timeStartArray.split(',')
+actualTimeStartArray.reverse()
 
-var timeEndArray = localStorage.getItem("timeEndArray")
+
+// var timeEndArray = localStorage.getItem("timeEndArray")
+var timeEndArray = sessionStorage.getItem("timeEndArray")
 var actualTimeEndArray = timeEndArray.split(',')
+actualTimeEndArray.reverse()
 
 console.log("string of dates:", dateArray)
 console.log("string of days:", dayArray)
@@ -38,6 +49,7 @@ $("document").ready(function () {
         $("#finalPlanDiv").append($("<br>"))
 
         //Loop through all recipes in final plan and display data for each
+        // TODO: NEED TO REVERSE DATE ARRAY
         for (let i = 0; i < data.length; i++) {
             console.log("recipe:", data[i])
 

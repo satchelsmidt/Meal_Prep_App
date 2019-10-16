@@ -1,5 +1,13 @@
 $(document).ready(function(){
 
+    sessionStorage.clear("planstart")
+    sessionStorage.clear("planend")
+    sessionStorage.clear("dateArray")
+    sessionStorage.clear("dayArray")
+    sessionStorage.clear("timeStartArray")
+    sessionStorage.clear("timeEndArray")
+
+
     var signUpForm = $("form.signup");
     var userNameInput = $("input#user-name-input");
     var passwordInput = $("input#password-input")
