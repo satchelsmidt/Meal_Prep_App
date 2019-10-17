@@ -9,7 +9,6 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/assets/css/styles.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -19,34 +18,39 @@
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
 <body>
+
   <!-- Logout capabilities in header -->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/logout">
-          Logout
-        </a>
-      </div>
+  <nav class="grey">
+    <div class="nav-wrapper grey">
+      <a href="/home" class="brand-logo">Meal Prepper</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
     </div>
   </nav>
   <br>
+
+  <p id='background' class='grey'>This app allows you to create a week-long meal plan based on your availability throughout the week, as well as the types of recipes you would like to cook for that week. Clicking 'Create Plan' will walk you through the plan creation process, while clicking 'View Plans' will allow you to view a list of the plans you have already created. </p>
   <br>
-  <h1 id="header">Meal Prepper</h1>
-  <h4 id="subheader">The world's most efficient meal planner!</h4>
-  <br>
+
   <!-- Div containing buttons to either view all user created plans, or create a new plan -->
   <div>
     <a href="plans">
-      <button id="viewPlans">View Plans</button>
+      <button class="btn waves-effect waves-light" id="viewPlans">View Plans</button>
     </a>
 
     <a href="createPlan">
-      <button id="createPlan">Create Plan</button>
+      <button class="btn waves-effect waves-light" id="createPlan">Create Plan</button>
     </a>
   </div>
+  <br>
+
   <!-- Footer -->
   <footer class="page-footer font-small blue pt-4">
     <div class="container-fluid text-center text-md-left">
@@ -55,7 +59,7 @@
       <div class="col-md-3 mb-md-0 mb-3">
         <!-- Footer Links -->
         <a href="#">API Things</a> |
-        <a href="#">Github Repo</a>
+        <a href="https://github.com/satchelsmidt/Meal_Prep_App">Github Repo</a>
         <span>
           <p>© 2019 Copyright: Satchel Smidt</p>
         </span>

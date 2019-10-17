@@ -1,3 +1,4 @@
+// Recipe Card variables
 var recipeTitle
 var recipeLink
 var recipeTime
@@ -6,75 +7,63 @@ var ingredients
 
 var finalRecipeDiv
 
-// var planStart = localStorage.getItem("planStart")
-// var planEnd = localStorage.getItem("planEnd")
+//Time variables (retrieve from sessionStorage)
 var planStart = sessionStorage.getItem("planStart")
 var planEnd = sessionStorage.getItem("planEnd")
 
-// var dateArray = localStorage.getItem("dateArray")
 var dateArray = sessionStorage.getItem("dateArray")
 var actualDateArray = dateArray.split(',')
 
-
-// var dayArray = localStorage.getItem("dayArray")
 var dayArray = sessionStorage.getItem("dayArray")
-
 var actualDayArray = dayArray.split(',')
 
-// var timeStartArray = localStorage.getItem("timeStartArray")
 var timeStartArray = sessionStorage.getItem("timeStartArray")
 var actualTimeStartArray = timeStartArray.split(',')
 actualTimeStartArray.reverse()
 
-
-// var timeEndArray = localStorage.getItem("timeEndArray")
 var timeEndArray = sessionStorage.getItem("timeEndArray")
 var actualTimeEndArray = timeEndArray.split(',')
 actualTimeEndArray.reverse()
 
+//Console logs (for testing)
 console.log("string of dates:", dateArray)
 console.log("string of days:", dayArray)
 console.log("string of time ONEs:", timeStartArray)
 console.log("string of time TWOs:", timeEndArray)
 
+// Document function which displays recipe cards that correspond with current plan
 $("document").ready(function () {
 
     $.get("/api/final_plan").then(function (data) {
         console.log("Data: ", data)
 
-        //Append header for final plan
-        $("#finalPlanDiv").append($("<h1>Your Meal Plan:</h1>"))
-        $("#finalPlanDiv").append($("<br>"))
-
-        //Loop through all recipes in final plan and display data for each
+        //Loop through all recipes in final plan and display cards for each
         for (let i = 0; i < data.length; i++) {
             console.log("recipe:", data[i])
+
+            recipeTitle = data[i].recipe_title
+            recipeServings = data[i].recipe_servings
+            recipeTime = data[i].recipe_time
+            recipeLink = data[i].recipe_link
 
             finalRecipeDiv = $("<div>")
             finalRecipeDiv.attr("class", "finalRecipe")
 
-            recipeTitle = data[i].recipe_title
-            console.log("TITLE: ", recipeTitle)
-            var title = $("<h3>").text(recipeTitle)
-            finalRecipeDiv.append(title)
+            // Dynamimcally create recipe card using variables and string literals
+            var finalRecipeCard = $(`
+                <div id='recipeCard' class='col'">
+                  <div class="card">
+                    <div class="card-content uniqueContent">
+                    <span class="card-title">${recipeTitle}</span>
+                      <p><b>Servings:</b> ${recipeServings}</p>
+                      <p><b>Cook Time:</b> ${recipeTime}</p>
+                      <p><a href="${recipeLink}">Link to recipe</a></p>
+                    </div>
+                  </div>
+                </div>
+                `)
 
-            recipeLink = data[i].recipe_link
-            console.log("LINK: ", recipeLink)
-            var link = $("<a target='_blank' href='" + recipeLink + "'>" + "Recipe Link" + "</a>")
-            finalRecipeDiv.append(link)
-
-            recipeTime = data[i].recipe_time
-            console.log("COOK TIME: ", recipeTime)
-            var time = $("<p>").append("Cook Time: ", recipeTime, " minutes")
-            finalRecipeDiv.append(time)
-
-            recipeServings = data[i].recipe_servings
-            console.log("SERVINGS: ", recipeServings)
-            var servings = $("<p>").append("Servings: ", recipeServings, " servings")
-            finalRecipeDiv.append(servings)
-
-            $("#finalPlanDiv").append(finalRecipeDiv)
-            $("#finalPlanDiv").append($("<br>"))
+            $("#finalPlanDiv").append(finalRecipeCard)
 
             var ingredients = data[i].recipe_ingredients
             var ingredientsSplit = ingredients.split(',')
@@ -82,12 +71,33 @@ $("document").ready(function () {
             console.log("array of separate ingredients:", ingredientsSplit)
 
             for (let k = 0; k < ingredientsSplit.length; k++) {
-                var ingredient = $("<li>" + ingredientsSplit[k] + "</li>")
+                var ingredient = $("<li>" + "- " + ingredientsSplit[k] + "</li>")
                 $("#ingredientsList").append(ingredient)
+                // }
             }
         }
-        //Create/add to shopping list for user
-        $("#shoppingList").prepend($("<h1>Ingredients:</h1>"))
+        // recipeTitle = data[i].recipe_title
+        // console.log("TITLE: ", recipeTitle)
+        // var title = $("<h3>").text(recipeTitle)
+        // finalRecipeDiv.append(title)
+
+        // recipeLink = data[i].recipe_link
+        // console.log("LINK: ", recipeLink)
+        // var link = $("<a target='_blank' href='" + recipeLink + "'>" + "Recipe Link" + "</a>")
+        // finalRecipeDiv.append(link)
+
+        // recipeTime = data[i].recipe_time
+        // console.log("COOK TIME: ", recipeTime)
+        // var time = $("<p>").append("Cook Time: ", recipeTime, " minutes")
+        // finalRecipeDiv.append(time)
+
+        // recipeServings = data[i].recipe_servings
+        // console.log("SERVINGS: ", recipeServings)
+        // var servings = $("<p>").append("Servings: ", recipeServings, " servings")
+        // finalRecipeDiv.append(servings)
+
+        // $("#finalPlanDiv").append(finalRecipeDiv)
+
     });
 })
 
@@ -96,7 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['interaction', 'dayGrid', 'timeGrid'],
+        // plugins: ['interaction', 'dayGrid', 'timeGrid'],
+        plugins: ['dayGrid', 'timeGrid'],
         defaultView: 'timeGrid',
         visibleRange: {
             start: planStart,
@@ -115,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 url: 'http://www.simplyrecipes.com/recipes/pasta_e_fagioli/'
             }
         ],
-        eventClick: function(event) {
+        eventClick: function (event) {
             if (event.url) {
                 window.open(event.url, "_blank");
                 return false;
@@ -150,4 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         calendar.addEvent(event)
     }
+
+    $("#calendar").prepend("<h5>Calendar:</h5>")
+
 });

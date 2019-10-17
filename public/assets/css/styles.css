@@ -14,46 +14,76 @@
   }
 
   .card-image{
-    height: 200px;
-    width: 200px;
+    height: auto;
+    width: auto;
   }
 
-  #header{
-    /* background-color: slategray; */
+  .btn-floating{
+    overflow: auto;
+  }
+
+  .card{
+    overflow: auto;
+    height: auto;
+    width: auto;
+  }
+
+  #createPlan{
+    clear: both;
+  }
+
+  #recipeCard{
+    margin: 10px;
+    float: left;
+    width: 33%;
+  }
+
+  #recipesReturned{
+    overflow: auto;
+  }
+  .header{
     opacity: .90;
     padding: 10px;
     margin: 10px;
   }
 
-  /* img{
-    height: 200px;
-    width: 200px;
-  } */
+  #finalPlanDiv{
+    overflow: auto;
+  }
 
-  /* #planRange{
-      background-color: slategray;
-      opacity: .90;
-      padding: 5px;
-      margin-bottom: 0px;
-  } */
-
-  /* #subheader{
-    background-color: slategray;
+  #shoppingList{
     opacity: .90;
-    padding: 5px;
-    margin-top:0px;
-  } */
+    margin: 20px;
+    padding: 10px;
+  }
+
+  #calendar{
+    padding: 10px;
+    opacity: .90;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+#background{
+  opacity: .90;
+  padding: 20px;
+  color: white;
+  margin-bottom: 0px;
+}
+
+h5, #mealPlanStart{
+  color: white;
+  padding: 10px;
+}
 
   footer{
-    /* background-color: slategray; */
     opacity: .90;
     align-content: center;
     padding: 10px;
-    margin: 10px;
+    /* margin: 10px; */
   }
 
   .container{
-    /* background-color: slategray; */
     /* display: inline-block;
     position: relative; */
     /* margin: 0 auto;  */
@@ -67,19 +97,22 @@
     opacity: .90;
   }
 
-  /* .navbar{
-    background-color: slategray;
+  nav{
     opacity: .90;
-    display: inline-block;
-  } */
+    /* margin: 10px; */
+    margin: 0 auto;
+    padding: 10px;
+    height: 84px;;
+    overflow: auto;
+  }
 
-  /* .navbar_brand{
-    color: black;
-  } */
-/* 
+  .nav-wrapper{ 
+    opacity: .90;
+  }
+
   a{
     color: black;
-  } */
+  }
 
   /* .row{
     width: 500px;

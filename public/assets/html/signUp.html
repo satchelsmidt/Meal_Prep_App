@@ -9,7 +9,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Materialize -->
@@ -18,18 +17,27 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
 <body>
 
-    <!-- Header Area (only title on signup/login screen) -->
-    <h1 id="header" class="grey lighten-2">Meal Prepper</h1>
+    <!-- Header -->
+    <nav class="grey">
+        <div class="nav-wrapper grey">
+            <a href="/home" class="brand-logo">Meal Prepper</a>
+        </div>
+    </nav>
+    <br>
 
     <!-- BOOSTRAP SIGNUP FORM -->
-    <div class="container grey lighten-1">
+    <div class="container grey">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <h2 id="signUpHeader">Sign Up</h2>
+                <!-- <h3 id="signUpHeader">Sign Up</h3> -->
+                <h3>Sign Up</h3>
                 <form class="signup">
                     <div class="form-group">
                         <label for="exampleInputUsername1">Username</label>
@@ -50,16 +58,17 @@
             </div>
         </div>
     </div>
+    <br>
 
     <!-- Footer -->
-    <footer class="page-footer font-small grey lighten-2 pt-4 ">
+    <footer class="page-footer font-small blue pt-4">
         <div class="container-fluid text-center text-md-left">
             <hr class="clearfix w-100 d-md-none pb-3">
             <!-- Grid column -->
             <div class="col-md-3 mb-md-0 mb-3">
                 <!-- Footer Links -->
                 <a href="#">API Things</a> |
-                <a href="#">Github Repo</a>
+                <a href="https://github.com/satchelsmidt/Meal_Prep_App">Github Repo</a>
                 <span>
                     <p>© 2019 Copyright: Satchel Smidt</p>
                 </span>

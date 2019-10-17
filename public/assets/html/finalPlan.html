@@ -11,9 +11,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <!-- custom css -->
-  <link rel="stylesheet" href="/assets/css/styles.css">
-
   <!-- FulCalendar stuff -->
   <link href="https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css" rel="stylesheet">
   <link href="https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.css" rel="stylesheet">
@@ -25,35 +22,42 @@
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!-- custom css -->
+  <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 
 <body>
-  <!-- Logout capabilities in header -->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/logout">
-          Logout
-        </a>
-      </div>
+
+<!-- Logout capabilities in header -->
+  <nav class="grey">
+    <div class="nav-wrapper grey">
+      <a href="/home" class="brand-logo">Meal Prepper</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/logout">Logout</a></li>
+      </ul>
     </div>
   </nav>
+  <br>
 
-  <input type="button" id="testButton">
-
+  <h5 class='grey'>Your Meal Plan:</h5>
   <br>
   <div id="finalPlanDiv">
     <!-- Where user's final plan details show up -->
   </div>
 
   <!-- Where the user's shopping list appears:  -->
-  <div id="shoppingList">
+  <div id="shoppingList" class="grey">
+    <h5>Shopping List:</h5>
     <ul id="ingredientsList">
     </ul>
   </div>
 
   <!-- Calendar display -->
-  <div id='calendar'></div>
+
+  <div id='calendar' class="grey">
+  </div>
+  <br>
 
   <!-- Footer -->
   <footer class="page-footer font-small blue pt-4">
@@ -63,7 +67,7 @@
       <div class="col-md-3 mb-md-0 mb-3">
         <!-- Footer Links -->
         <a href="#">API Things</a> |
-        <a href="#">Github Repo</a>
+        <a href="https://github.com/satchelsmidt/Meal_Prep_App">Github Repo</a>
         <span>
           <p>© 2019 Copyright: Satchel Smidt</p>
         </span>

@@ -1,7 +1,9 @@
 //This file is where the user selects parameters that will make up their plan
+
 //Declare plan id number globally
 var planId
 
+//Declare time variables globally
 var dateArray = []
 var dayArray = []
 var timeStartArray = []
@@ -16,58 +18,49 @@ $(document).ready(function () {
     });
 });
 
+//Function which runs to determine user plan start date
 $("#planDateSubmit").on("click", function (event) {
     event.preventDefault()
 
     var planStart = new Date($('#mealPlanStart').val())
     console.log(planStart)
-    // day = planStart.getDate() + 1;
-    // month = planStart.getMonth() + 1;
-    // year = planStart.getFullYear();
 
     var planEnd = new Date();
     planEnd.setDate(planStart.getDate() + 6)
 
     function getDates(planStart, planEnd) {
-        var dateHeader = $("<h5>Input the time you are available to Prep each day:</h5>")
+        var dateHeader = $("<h5>Times you are available to Prep each day:</h5>")
         $("#planRange").prepend(dateHeader)
-
-        // var dateArray = []
-        // var dayArray = []
 
         var currentDate = moment(planStart).add(1, 'days');
         // var currentDate = moment(planStart)
 
         var beginPlan = currentDate.format("YYYY-MM-DD")
         console.log("CURRENT DATE (store locally)", beginPlan)
-
-        // localStorage.setItem("planStart", beginPlan)
         sessionStorage.setItem("planStart", beginPlan)
-
 
         // var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
         var endPlan = moment(planEnd).format("YYYY-MM-DD")
         console.log("plan end date in YYYY-MM-DD format:", endPlan)
-
-        // localStorage.setItem("planEnd", endPlan)
         sessionStorage.setItem("planEnd", endPlan)
 
-
-         // var stopDate = moment(planEnd).add(1, 'days')
+        // var stopDate = moment(planEnd).add(1, 'days')
         var stopDate = moment(planEnd)
+
         while (currentDate <= stopDate) {
             dayArray.push(moment(currentDate).format('dddd'))
             dateArray.push(moment(currentDate).format("YYYY-MM-DD"))
             currentDate = moment(currentDate).add(1, 'days')
         }
 
-        // localStorage.setItem("dayArray", dayArray)
-        // localStorage.setItem("dateArray", dateArray)
         sessionStorage.setItem("dayArray", dayArray)
         sessionStorage.setItem("dateArray", dateArray)
+
+        //console logs for testing
         console.log(dayArray)
         console.log(dateArray)
 
+        //Dynamically create time-range selection boxes
         for (let i = 0; i < dateArray.length; i++) {
             var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + " <input type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input type='time' id='time" + i + "02' data-time='" + i + "02'></input>" + "</li>" + "<br>")
             date.attr("id", "date")
@@ -75,19 +68,18 @@ $("#planDateSubmit").on("click", function (event) {
             $("#dates").append(date)
         }
     }
+
     getDates(planStart, planEnd)
 
+    //Create button for user to submit the inputted times
     var submitTimes = $("<button>")
     submitTimes.attr("id", "submitTimes")
     submitTimes.text("Submit Times")
-
     $("#planRange").append(submitTimes)
 })
 
 //Function that calculates available time throughout the week for the user based on inputs above
 $(document).on("click", "#submitTimes", function (event) {
-    // var timeStartArray = []
-    // var timeEndArray = []
 
     for (let i = 6; i >= 0; i--) {
         // Section where we calculate available timeslots to input on Calendar next page
@@ -101,14 +93,12 @@ $(document).on("click", "#submitTimes", function (event) {
         timeEndArray.push(timeTwo)
     }
 
-    // localStorage.setItem("timeStartArray", timeStartArray)
-    // localStorage.setItem("timeEndArray", timeEndArray)
-    
     sessionStorage.setItem("timeStartArray", timeStartArray)
     sessionStorage.setItem("timeEndArray", timeEndArray)
+
+    // Console logs for testing
     console.log('array of start times: ', timeStartArray)
     console.log('array of end times: ', timeEndArray)
-
 });
 
 //cuisine types to include in search (can be comma separated list)
@@ -143,6 +133,10 @@ $(".dietButton").on("click", function () {
     console.log("DIET:", diet)
 })
 
+//TODO:
+//1. cuisine types to NOT include in search (can be comma separated list). Similar construction to existing params
+var dontLike = "Greek"
+
 //Where we define all of the data we would like to return from our AJAX call for later storage in our DB
 var recipeTitle
 var recipeImg
@@ -153,12 +147,9 @@ var recipeServings
 var ingredientsArr
 var stepsArr
 
-var recipeDiv
+$("#recipeSearch").on("click", function (event) {
 
-$("#recipeSearch").on("click", function () {
-
-    console.log("BUTOTN CLICK")
-
+    event.preventDefault()
 
     var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&number=2&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
 
@@ -168,94 +159,21 @@ $("#recipeSearch").on("click", function () {
     }).then(function (data) {
         console.log("Data Returned: ", data)
 
-        console.log("BUTTON CLICK")
-
-        //TEST THIS
-
-        // recipeDiv = $("<div>")
-        // recipeDiv.attr("class", "uniqueRecipe")
-
-        // let output = $("<div class='row'>")
-
-        // let output = $("<div>")
-
-        // for (let i = 0; i < data.results.length; i++) {
-        //     recipeImg = data.results[i].image
-
-            // <div class="row"> //DO NOT INCLUDE
-            // output += `
-            // <div class="col s12 m6">
-            //   <div class="card">
-            //     <div class="card-image">
-            //     <img src="${recipeImg}" class="card-img-top">
-            //     <span class="card-title">Card Title</span>
-            //       <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-            //     </div>
-            //     <div class="card-content">
-            //       <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-            //     </div>
-            //   </div>
-            // </div>
-            // `
-            /* </div> */ //ALSO DO NOT INCLUDE
-            // output += $("</div>")
-
-            // $("#recipesReturned").append(output)
-        // }
-
-
-
-        //For loop to iterate through returned recipes
+        //Loop through data returned from AJAX call
         for (let i = 0; i < data.results.length; i++) {
-            //Create div within div to hold each recipe
-            recipeDiv = $("<div>")
-            recipeDiv.attr("class", "uniqueRecipe")
 
-            //Globally declared vars are defined here
+            //Declare variables needed to dynamically construct cards
             recipeTitle = data.results[i].title
-            console.log("TITLE: ", recipeTitle)
-            var title = $("<h1>").text(recipeTitle)
-            recipeDiv.append(title)
-
-            //
-
             recipeImg = data.results[i].image
-            console.log("IMAGE: ", recipeImg)
-            var img = $("<img>").attr("src", recipeImg)
-            recipeDiv.append(img)
-            recipeDiv.append("<br>")
-
-            //
-
             recipeLink = data.results[i].sourceUrl
-            console.log("LINK: ", recipeLink)
-            var link = $("<a target='_blank' href='" + recipeLink + "'>" + "Recipe Link" + "</a>")
-            recipeDiv.append(link)
-
-            //
-
             recipeCuisines = data.results[i].cuisines.toString()
-            console.log("CUISINES: ", recipeCuisines)
-            var cuisineTypes = $("<p>").append("Cuisine Types: ", recipeCuisines)
-            recipeDiv.append(cuisineTypes)
-
-            //
-
             recipeTime = data.results[i].readyInMinutes.toString()
-            console.log("COOK TIME: ", recipeTime)
-            var time = $("<p>").append("Cook Time: ", recipeTime, " minutes")
-            recipeDiv.append(time)
-
-            //
-
             recipeServings = data.results[i].servings.toString()
-            console.log("SERVINGS: ", recipeServings)
-            var servings = $("<p>").append("Servings: ", recipeServings, " servings")
-            recipeDiv.append(servings)
 
-            //
+            // Store but do not display
             ingredientsArr = []
             stepsArr = []
+
             for (let k = 0; k < data.results[i].analyzedInstructions[0].steps.length; k++) {
 
                 var ingredient = data.results[i].analyzedInstructions[0].steps[k].ingredients
@@ -267,21 +185,14 @@ $("#recipeSearch").on("click", function () {
                 stepsArr.push(step)
             }
 
-            console.log("INGREDIENTS ARR:", ingredientsArr)
-            console.log("INGREDIENTS ARR (STRING):", ingredientsArr.toString())
-
             ingredientsArr = ingredientsArr.toString();
-
-            // Not displaying this data
             stepsArr = stepsArr.toString()
-            console.log("Array of steps:", stepsArr)
 
             //Append 'add to plan' button
             var addRecipe = $("<button>")
-            addRecipe.attr("class", "addRecipe")
             addRecipe.text("Add recipe to plan!")
+            addRecipe.attr("class", "addRecipe")
 
-            //Add all data to button because we need to link it to each buttonclick
             addRecipe.data("title", recipeTitle)
             addRecipe.data("img", recipeImg)
             addRecipe.data("link", recipeLink)
@@ -291,19 +202,38 @@ $("#recipeSearch").on("click", function () {
             addRecipe.data("ingredients", ingredientsArr)
             addRecipe.data("steps", stepsArr)
 
-            recipeDiv.append(addRecipe)
+            console.log(addRecipe)
 
-            $("#recipesReturned").append(recipeDiv)
-            $("#recipesReturned").append($("<br>"))
-            $("#recipesReturned").append($("<br>"))
+            // Dynamimcally create recipe card using variables and string literals
+            var recipeCard = $(`
+            <div id='recipeCard' class='col'">
+              <div class="card">
+                <div class="card-image">
+                <img src="${recipeImg}" class="card-img-top">
+                </div>
+                <div class="card-content uniqueContent">
+                <span class="card-title">${recipeTitle}</span>
+                  <p><b>Cuisines:</b> ${recipeCuisines}</p>
+                  <p><b>Servings:</b> ${recipeServings}</p>
+                  <p><b>Cook Time:</b> ${recipeTime}</p>
+                  <p><a href="${recipeLink}">Link to recipe</a></p>
+                </div>
+              </div>
+            </div>
+            `)
+
+            recipeCard.append(addRecipe)
+
+            $("#recipesReturned").append(recipeCard)
         }
 
+        //After all cards created, append 'create plan' button to finalize plan creation and move to next page
         var createPlan = $("<button>")
         createPlan.attr("id", "createPlan")
         createPlan.text("CREATE YOUR PLAN!")
 
-        $("#recipesReturned").append($("<br>"))
-        $("#recipesReturned").append(createPlan)
+        $("#submission").append($("<br>"))
+        $("#submission").append(createPlan)
     })
 })
 
@@ -386,8 +316,3 @@ $(document).on("click", "#createPlan", function (event) {
         })
     }
 })
-
-//TODO:
-//1. cuisine types to NOT include in search (can be comma separated list). Similar construction to existing params
-var dontLike = "Greek"
-
