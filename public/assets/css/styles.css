@@ -13,11 +13,16 @@
     background-size: cover;
   }
 
+  .card-image{
+    height: 200px;
+    width: 200px;
+  }
+
   #header{
-    background-color: slategray;
+    /* background-color: slategray; */
     opacity: .90;
-    padding: 5px;
-    margin-bottom: 0px;
+    padding: 10px;
+    margin: 10px;
   }
 
   /* img{
@@ -25,39 +30,40 @@
     width: 200px;
   } */
 
-  #planRange{
+  /* #planRange{
       background-color: slategray;
       opacity: .90;
       padding: 5px;
       margin-bottom: 0px;
-  }
+  } */
 
-  #subheader{
+  /* #subheader{
     background-color: slategray;
     opacity: .90;
     padding: 5px;
     margin-top:0px;
-  }
+  } */
 
   footer{
-    background-color: slategray;
+    /* background-color: slategray; */
     opacity: .90;
     align-content: center;
-    padding: 5px;
-    margin-top: 0px;
+    padding: 10px;
+    margin: 10px;
   }
 
   .container{
-    background-color: slategray;
-    /* display: inline-block; */
-    /* position: relative; */
-    margin: 0 auto; 
+    /* background-color: slategray; */
+    /* display: inline-block;
+    position: relative; */
+    /* margin: 0 auto;  */
     width: 500px;
     overflow: auto;
-    padding-top: 8px;
+    padding: 10px;
     border-radius: 25px;    
-    margin-top: 20px;
-    align-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* align-content: center; */
     opacity: .90;
   }
 
@@ -70,25 +76,25 @@
   /* .navbar_brand{
     color: black;
   } */
-
+/* 
   a{
     color: black;
-  }
+  } */
 
-  .row{
+  /* .row{
     width: 500px;
     padding: 20px;
-  }
+  } */
 
-  .btn-default{
+  /* .btn-default{
     background-color: lightgray;
     border-radius: 25px;
-  }
-
+  } */
+/* 
   button .dietButton .cuisineButton #recipeSearch{
     background-color: lightgray;
     border-radius: 25px;
-  }
+  } */
 
   /* #header{
     margin-top: 0px;

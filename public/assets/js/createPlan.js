@@ -157,6 +157,9 @@ var recipeDiv
 
 $("#recipeSearch").on("click", function () {
 
+    console.log("BUTOTN CLICK")
+
+
     var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&number=2&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
 
     $.ajax({
@@ -165,6 +168,8 @@ $("#recipeSearch").on("click", function () {
     }).then(function (data) {
         console.log("Data Returned: ", data)
 
+        console.log("BUTOTN CLICK")
+
         //TEST THIS
 
         // recipeDiv = $("<div>")
@@ -172,36 +177,39 @@ $("#recipeSearch").on("click", function () {
 
         // let output = $("<div class='row'>")
 
-        // for (let i = 0; i < data.results.length; i++) {
-        //     recipeImg = data.results[i].image
+        let output = $("<div>")
 
-        //     // <div class="row">
-        //     output += `
-        //     <div class="col s12 m6">
-        //       <div class="card">
-        //         <div class="card-image">
-        //           <img src="${recipeImg}" class="card-img-top">
-        //           <span class="card-title">Card Title</span>
-        //           <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-        //         </div>
-        //         <div class="card-content">
-        //           <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-        //         </div>
-        //       </div>
-        //     </div>
-        //     `
-        //     /* </div> */
-        //     output += $("</div>")
+        for (let i = 0; i < data.results.length; i++) {
+            recipeImg = data.results[i].image
 
-        //     recipeDiv.append(output)
-        // }
+            // <div class="row">
+            output += `
+            <div class="col s12 m6">
+              <div class="card">
+                <div class="card-image">
+                <img src="${recipeImg}" class="card-img-top">
+                <span class="card-title">Card Title</span>
+                  <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                </div>
+                <div class="card-content">
+                  <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                </div>
+              </div>
+            </div>
+            `
+            /* </div> */
+            output += $("</div>")
+
+            $("#recipesReturned").append(output)
+        }
+
 
 
         //For loop to iterate through returned recipes
         for (let i = 0; i < data.results.length; i++) {
             //Create div within div to hold each recipe
-            recipeDiv = $("<div>")
-            recipeDiv.attr("class", "uniqueRecipe")
+            // recipeDiv = $("<div>")
+            // recipeDiv.attr("class", "uniqueRecipe")
 
             //Globally declared vars are defined here
             recipeTitle = data.results[i].title
@@ -211,11 +219,11 @@ $("#recipeSearch").on("click", function () {
 
             //
 
-            recipeImg = data.results[i].image
-            console.log("IMAGE: ", recipeImg)
-            var img = $("<img>").attr("src", recipeImg)
-            recipeDiv.append(img)
-            recipeDiv.append("<br>")
+            // recipeImg = data.results[i].image
+            // console.log("IMAGE: ", recipeImg)
+            // var img = $("<img>").attr("src", recipeImg)
+            // recipeDiv.append(img)
+            // recipeDiv.append("<br>")
 
             //
 
