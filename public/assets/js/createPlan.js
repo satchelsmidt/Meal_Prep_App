@@ -35,8 +35,8 @@ $("#planDateSubmit").on("click", function (event) {
         // var dateArray = []
         // var dayArray = []
 
-        //var currentDate = moment(planStart).add(1, 'days');
-        var currentDate = moment(planStart)
+        var currentDate = moment(planStart).add(1, 'days');
+        // var currentDate = moment(planStart)
 
         var beginPlan = currentDate.format("YYYY-MM-DD")
         console.log("CURRENT DATE (store locally)", beginPlan)

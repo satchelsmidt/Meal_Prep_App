@@ -39,8 +39,6 @@ console.log("string of time TWOs:", timeEndArray)
 
 $("document").ready(function () {
 
-    console.log("CLICKED A BUTTON")
-
     $.get("/api/final_plan").then(function (data) {
         console.log("Data: ", data)
 
@@ -49,7 +47,6 @@ $("document").ready(function () {
         $("#finalPlanDiv").append($("<br>"))
 
         //Loop through all recipes in final plan and display data for each
-        // TODO: NEED TO REVERSE DATE ARRAY
         for (let i = 0; i < data.length; i++) {
             console.log("recipe:", data[i])
 
@@ -93,8 +90,6 @@ $("document").ready(function () {
         $("#shoppingList").prepend($("<h1>Ingredients:</h1>"))
     });
 })
-
-// var calendar
 
 document.addEventListener('DOMContentLoaded', function () {
 

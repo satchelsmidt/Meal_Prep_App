@@ -53,8 +53,9 @@ module.exports = function (app) {
 
                 recipeArr.push(recipeData)
                 console.log("this is your array of recipes: ", recipeData)
+                // console.log(dbPlan[0].id)
             }
-            res.json(dbPlan[0].id)
+            // res.json(dbPlan[0].id)
             res.json(recipeArr)
         })
     });
