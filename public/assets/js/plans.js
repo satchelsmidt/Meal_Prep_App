@@ -13,8 +13,16 @@ $(document).ready(function() {
       console.log("QUERY URL: ", queryUrl)
       
       $.get(queryUrl, function(userPlans){
-          console.log("LALALALALALALALALALA")
         console.log(userPlans)
+
+        for (let i = 0; i < userPlans.length; i++) {
+          var planContent = $("<li>")
+          planContent.html("Plan Id: " + userPlans[i].id)
+
+          $("#planList").append(planContent)
+          
+        }
+
     })
 
     });

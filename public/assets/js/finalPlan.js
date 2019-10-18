@@ -57,7 +57,7 @@ $("document").ready(function () {
                     <span class="card-title">${recipeTitle}</span>
                       <p><b>Servings:</b> ${recipeServings}</p>
                       <p><b>Cook Time:</b> ${recipeTime}</p>
-                      <p><a href="${recipeLink}">Link to recipe</a></p>
+                      <p><a href="${recipeLink}" target="_blank">Link to recipe</a></p>
                     </div>
                   </div>
                 </div>
@@ -67,13 +67,14 @@ $("document").ready(function () {
 
             var ingredients = data[i].recipe_ingredients
             var ingredientsSplit = ingredients.split(',')
+            var uniqueIngredients = new Set(ingredientsSplit)
+            var finalIngredients = [...uniqueIngredients]
 
-            console.log("array of separate ingredients:", ingredientsSplit)
+            console.log("array of unique ingredients:", finalIngredients)
 
-            for (let k = 0; k < ingredientsSplit.length; k++) {
-                var ingredient = $("<li>" + "- " + ingredientsSplit[k] + "</li>")
+            for (let k = 0; k < finalIngredients.length; k++) {
+                var ingredient = $("<li>" + "- " + finalIngredients[k] + "</li>")
                 $("#ingredientsList").append(ingredient)
-                // }
             }
         }
         // recipeTitle = data[i].recipe_title
@@ -113,11 +114,11 @@ document.addEventListener('DOMContentLoaded', function () {
             start: planStart,
             end: planEnd
         },
-        // header: {
-        //     left: 'prev,next today',
-        //     center: 'title',
-        //     right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        // },
+        header: {
+            left: '',
+            center: 'title',
+            right: ''
+        },
         events: [
             {
                 title: 'Pasta e Fagiolo',
@@ -153,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("real plan ends: ", realend)
 
         var event = {
-            title: "Time Slot",
+            title: "Recipe " + (i+1),
             start: planstart,
             end: planend
         }
@@ -162,6 +163,6 @@ document.addEventListener('DOMContentLoaded', function () {
         calendar.addEvent(event)
     }
 
-    $("#calendar").prepend("<h5>Calendar:</h5>")
+    $("#calendar").prepend("<h5>Calendar</h5>")
 
 });

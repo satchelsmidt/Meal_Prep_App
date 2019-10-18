@@ -35,7 +35,7 @@
   #recipeCard{
     margin: 10px;
     float: left;
-    width: 33%;
+    width: 30%;
   }
 
   #recipesReturned{
@@ -47,15 +47,55 @@
     margin: 10px;
   }
 
-  #finalPlanDiv{
-    overflow: auto;
-  }
+h3, h4, h5{
+  font-family: 'Fjalla One', sans-serif;
+  opacity: .9;
+}
 
-  #shoppingList{
+p, a{
+  font-family: 'Abel', sans-serif;
+}
+
+#finalPlanDiv{
+  width: 70%;
+  float: left; 
+}
+
+#shoppingList{
+  width: 25%;
+  float: right;
+}
+
+  #shoppingList, #userPlans{
     opacity: .90;
     margin: 20px;
     padding: 10px;
   }
+
+  #mealPlanStart{
+    margin: 0 auto;
+    width: 100%;
+    color: white;
+  }
+
+#date{
+  overflow: auto;
+  width: 500px;
+  margin: 0px;
+  padding: 0px;
+}
+
+li{
+  margin: 0px;
+  padding: 0px;
+}
+
+.timeInput{
+  width: 200px;
+  float:left;
+  margin: 0px;
+  padding: 0px;
+}
 
   #calendar{
     padding: 10px;
@@ -71,7 +111,7 @@
   margin-bottom: 0px;
 }
 
-h5, #mealPlanStart{
+h5{
   color: white;
   padding: 10px;
 }
@@ -80,6 +120,7 @@ h5, #mealPlanStart{
     opacity: .90;
     align-content: center;
     padding: 10px;
+    clear: both;
     /* margin: 10px; */
   }
 

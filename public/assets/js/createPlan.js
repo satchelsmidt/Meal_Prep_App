@@ -39,13 +39,13 @@ $("#planDateSubmit").on("click", function (event) {
         console.log("CURRENT DATE (store locally)", beginPlan)
         sessionStorage.setItem("planStart", beginPlan)
 
-        // var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
-        var endPlan = moment(planEnd).format("YYYY-MM-DD")
+        var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
+        // var endPlan = moment(planEnd).format("YYYY-MM-DD")
         console.log("plan end date in YYYY-MM-DD format:", endPlan)
         sessionStorage.setItem("planEnd", endPlan)
 
-        // var stopDate = moment(planEnd).add(1, 'days')
-        var stopDate = moment(planEnd)
+        var stopDate = moment(planEnd).add(1, 'days')
+        // var stopDate = moment(planEnd)
 
         while (currentDate <= stopDate) {
             dayArray.push(moment(currentDate).format('dddd'))
@@ -62,7 +62,9 @@ $("#planDateSubmit").on("click", function (event) {
 
         //Dynamically create time-range selection boxes
         for (let i = 0; i < dateArray.length; i++) {
-            var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + " <input type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input type='time' id='time" + i + "02' data-time='" + i + "02'></input>" + "</li>" + "<br>")
+            // var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + " <input type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input type='time' id='time" + i + "02' data-time='" + i + "02'></input>" + "</li>" + "<br>")
+            // date.attr("id", "date")
+            var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + "<span><input class='timeInput' type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input class='timeInput' type='time' id='time" + i + "02' data-time='" + i + "02'></input></span>" + "</li>" + "<br>")
             date.attr("id", "date")
 
             $("#dates").append(date)
@@ -133,6 +135,21 @@ $(".dietButton").on("click", function () {
     console.log("DIET:", diet)
 })
 
+//Same functionality as cuisine/diet var and function, only adds intolerances
+var intolerances = ""
+
+$(".intoleranceButton").on("click", function () {
+    var intolerance = $(this).val().trim()
+    if (intolerances === "") {
+        intolerances += intolerance
+    }
+    else {
+        intolerances += ("," + intolerance)
+    }
+    $(this).attr("disabled", true)
+    console.log("INTOLERANCE:", intolerance)
+})
+
 //TODO:
 //1. cuisine types to NOT include in search (can be comma separated list). Similar construction to existing params
 var dontLike = "Greek"
@@ -151,7 +168,7 @@ $("#recipeSearch").on("click", function (event) {
 
     event.preventDefault()
 
-    var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&number=2&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
+    var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&intolerances=" + intolerances +"&number=5&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
 
     $.ajax({
         url: queryURL,
@@ -215,8 +232,8 @@ $("#recipeSearch").on("click", function (event) {
                 <span class="card-title">${recipeTitle}</span>
                   <p><b>Cuisines:</b> ${recipeCuisines}</p>
                   <p><b>Servings:</b> ${recipeServings}</p>
-                  <p><b>Cook Time:</b> ${recipeTime}</p>
-                  <p><a href="${recipeLink}">Link to recipe</a></p>
+                  <p><b>Cook Time:</b> ${recipeTime} Minutes</p>
+                  <p><a href="${recipeLink}" target="_blank">Link to recipe</a></p>
                 </div>
               </div>
             </div>
