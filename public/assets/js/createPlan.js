@@ -44,7 +44,7 @@ $("#planDateSubmit").on("click", function (event) {
         console.log("plan end date in YYYY-MM-DD format:", endPlan)
         sessionStorage.setItem("planEnd", endPlan)
 
-        var stopDate = moment(planEnd).add(1, 'days')
+        var stopDate = moment(planEnd).add(2, 'days')
         // var stopDate = moment(planEnd)
 
         while (currentDate <= stopDate) {
