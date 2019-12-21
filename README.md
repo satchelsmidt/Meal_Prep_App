@@ -48,6 +48,7 @@ This is a gif highlighting the plan creation and display process:
 * HTML
 * CSS/Materialize
 * MySQL
+ * Sequelize ORM
 
 ### Future Development
 
