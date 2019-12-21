@@ -117,12 +117,22 @@ h5{
 }
 
   footer{
+    display: flex;
+    flex-direction: column;
     opacity: .90;
     align-content: center;
     padding: 10px;
-    clear: both;
-    /* margin: 10px; */
+    /* height: 60px; */
+    /* clear: both;
+    overflow: auto; */
+    margin: 10px;
+    flex: 1;
   }
+/* 
+  body{
+    display: flex;
+    flex-direction: column;
+  } */
 
   .container{
     /* display: inline-block;

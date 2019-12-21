@@ -64,7 +64,7 @@ $("#planDateSubmit").on("click", function (event) {
         for (let i = 0; i < dateArray.length; i++) {
             // var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + " <input type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input type='time' id='time" + i + "02' data-time='" + i + "02'></input>" + "</li>" + "<br>")
             // date.attr("id", "date")
-            var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + "<span><input class='timeInput' type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input class='timeInput' type='time' id='time" + i + "02' data-time='" + i + "02'></input></span>" + "</li>" + "<br>")
+            var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + "<div class='row'><div class='col-4 border border-3'><input class='timeInput' type='time' id='time" + i + "01' data-time='" + i + "01'></input></div><div class='col-4 border border-3 rounded'><input class='timeInput' type='time' id='time" + i + "02' data-time='" + i + "02'></input></div></div></div>" + "</li>")
             date.attr("id", "date")
 
             $("#dates").append(date)
@@ -179,6 +179,10 @@ $("#recipeSearch").on("click", function (event) {
         //Loop through data returned from AJAX call
         for (let i = 0; i < data.results.length; i++) {
 
+            if (data.results[i].analyzedInstructions[0] === undefined){
+                continue;
+            }
+
             //Declare variables needed to dynamically construct cards
             recipeTitle = data.results[i].title
             recipeImg = data.results[i].image
@@ -222,9 +226,27 @@ $("#recipeSearch").on("click", function (event) {
             console.log(addRecipe)
 
             // Dynamimcally create recipe card using variables and string literals
-            var recipeCard = $(`
-            <div id='recipeCard' class='col'">
-              <div class="card">
+            // var recipeCard = $(`
+            // <div id='recipeCard' class='col'">
+            //   <div class="card" id='card${i}'>
+            //     <div class="card-image">
+            //     <img src="${recipeImg}" class="card-img-top">
+            //     </div>
+            //     <div class="card-content uniqueContent">
+            //     <span class="card-title">${recipeTitle}</span>
+            //       <p><b>Cuisines:</b> ${recipeCuisines}</p>
+            //       <p><b>Servings:</b> ${recipeServings}</p>
+            //       <p><b>Cook Time:</b> ${recipeTime} Minutes</p>
+            //       <p><a href="${recipeLink}" target="_blank">Link to recipe</a></p>
+            //     </div>
+            //   </div>
+            // </div>
+            // `)
+
+            var recipeCard = $("<div id='recipeCard' class='col'>")
+
+            var recipeContent= $(`
+              <div class="card" id='card${i}'>
                 <div class="card-image">
                 <img src="${recipeImg}" class="card-img-top">
                 </div>
@@ -235,13 +257,14 @@ $("#recipeSearch").on("click", function (event) {
                   <p><b>Cook Time:</b> ${recipeTime} Minutes</p>
                   <p><a href="${recipeLink}" target="_blank">Link to recipe</a></p>
                 </div>
-              </div>
-            </div>
-            `)
+              </div>`)
 
-            recipeCard.append(addRecipe)
+            recipeCard.append(recipeContent)
+
+            // $("#card"+i).append(addRecipe)
 
             $("#recipesReturned").append(recipeCard)
+            
         }
 
         //After all cards created, append 'create plan' button to finalize plan creation and move to next page
