@@ -51,4 +51,38 @@ This is a gif highlighting the plan creation and display process:
 
 ### Future Development
 
+* Add additional cuisine buttons 
+* View plans page returns:
+	* id of each plan
+	* start date (+ end date?) of plan
+	* link to plan page (calendar + meals)
+   * Create route that pulls up an existing plan based on id (or other unique value)
+* Final plan page shows:
+ * Recipe titles linked to calendar slots
+	* Recipes linked to calendar spots based on prep/cook time
+	* Remove duplicates from ingredients list
+	* Need to be able to recreate this page based on links (createplan/plans/x)? Or similar
+ * Change link to this page to be something like finalPlan/xyz where xyz is the unique id 
+* Create plan page has:
+	* onsistent range of dates (based on user local time?)
+	* API call that updates ‘plans’ db with start date of current plan (for user to view)
+	* ‘Plans’ table in DB needs fields for minutes available each day 
+	* records total available minutes each day of plan
+ 
+UI Updates
+ * Sticky Footer
+ * Hide default select arrows on input type="date" 
+ * Color Scheme change? 
+ * Buttons on ‘create plan’ page
+ * Cleaner date input fields
+ * Full notation/comments on code
+ 
+ Just for fun
+  * ‘+’ button to add more time ranges for each day maybe
+  * Scan receipts?
+  * User selects available times via calendar input (rather than timepicker)
+  * Google Sign in/Calendar
+  * ‘Favorites’ option which gives user choice of adding favorited recipes to that weeks plan
+  * Allow user to keep track of ingredients on hand (pantry?) that shortens shopping list if they already have the ingredient
+  * Visualization/tracking of total servings prepped through week versus total servings of food that user wants/needs
 
