@@ -17,7 +17,7 @@ This app is built using JavaScript, specifically Node.js, JQuery, and Express.js
 
 On app load, the user is presented with a signup screen. The user can sign up using a self-created username and password, or if they already have login credentials, they can click the button at the bottom of the form to be taken to a regular login page. 
 <br>
-<img src="/public/assets/images/signup.png" width="250" height="250"/>
+<img src="/public/assets/images/signup.PNG" width="250" height="250"/>
 
 Once the user is logged in, they are taken to a page with a brief description of how to use the application, as well as the ability to 'View Plans' and 'Create Plan'. __Note:__ the 'View Plans' menu option is still a work in progress
  
@@ -48,6 +48,7 @@ This is a gif highlighting the plan creation and display process:
 * HTML
 * CSS/Materialize
 * MySQL
+ * Sequelize ORM
 
 ### Future Development
 
