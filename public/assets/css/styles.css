@@ -3,6 +3,14 @@
     margin: 0 auto;
   }
 
+  .addRecipe{
+    margin: 5px;
+  }
+
+  #recipeSearch{
+    color: white;
+  }
+
   body {
     margin: 40px 10px;
     padding: 0;
@@ -23,19 +31,27 @@
   }
 
   .card{
+    padding: 10px;
+  }
+
+  .card > .card-content{
     overflow: auto;
     height: auto;
     width: auto;
+    padding: 10px;
   }
 
   #createPlan{
     clear: both;
+    margin: 0 auto;
+    display: block
   }
 
   #recipeCard{
     margin: 10px;
     float: left;
     width: 30%;
+    height: 550px;
   }
 
   #recipesReturned{
@@ -56,6 +72,11 @@ p, a{
   font-family: 'Abel', sans-serif;
 }
 
+#planDateSubmit{
+  color: white;
+  margin: 10px;
+}
+
 #finalPlanDiv{
   width: 70%;
   float: left; 
@@ -72,10 +93,17 @@ p, a{
     padding: 10px;
   }
 
+  form{
+    clear:both;
+    display: inline-block;
+  }
+
   #mealPlanStart{
-    margin: 0 auto;
-    width: 100%;
+    /* margin: 10 auto; */
+    padding-left: 10px;
+    /* width: 100%; */
     color: white;
+    display: inline-block;
   }
 
 #date{
@@ -114,6 +142,7 @@ li{
 h5{
   color: white;
   padding: 10px;
+  display: inline-block;
 }
 
   footer{

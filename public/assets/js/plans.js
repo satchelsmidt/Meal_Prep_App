@@ -16,10 +16,19 @@ $(document).ready(function() {
         console.log(userPlans)
 
         for (let i = 0; i < userPlans.length; i++) {
-          var planContent = $("<li>")
-          planContent.html("Plan Id: " + userPlans[i].id)
+          var planId = $("<li>")
+          planId.html("Plan Id: " + userPlans[i].id);
 
-          $("#planList").append(planContent)
+          var planRange=$("<li>")
+          planRange.html(userPlans[i].start_date + ' - '+ userPlans[i].end_date)
+
+          var planLink=$("<li>")
+          planLink.html($("<a href='#'>" + "View Plan" + "</a>"))
+
+          $("#planList").append(planId)
+          $("#planList").append(planRange)
+          $("#planList").append(planLink)
+          $("#planList").append($("<br>"))
           
         }
 

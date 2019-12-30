@@ -12,18 +12,19 @@ module.exports = function (app) {
             res.redirect("/home");
         }
 
-        res.sendFile(path.join(__dirname, "../public/assets/html/signUp.html"))
+        res.sendFile(path.join(__dirname, "../public/assets/html/login.html"))
     });
 
     app.get("/home", isAuthenticated, function(req, res){
         res.sendFile(path.join(__dirname, "../public/assets/html/home.html"))
     })
 
-    app.get("/login", function(req, res){
+    app.get("/signup", function(req, res){
         if(req.user){
             res.redirect("/home");
         }
-        res.sendFile(path.join(__dirname, "../public/assets/html/login.html"))
+        res.sendFile(path.join(__dirname, "../public/assets/html/signUp.html"))
+
     })
 
     app.get("/createPlan", isAuthenticated, function (req, res) {
