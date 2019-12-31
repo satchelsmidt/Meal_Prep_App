@@ -1,42 +1,38 @@
-//where we store the code for reaching a view of all plans
+//Code to display a view of all plans tied to current user
 
-$(document).ready(function() {
-    var UserId
-    // This file just does a GET request to figure out which user is logged in, and updates the HTML on the page
-    $.get("/api/user_data").then(function(data) {
-    //   $(".member-name").text(data.username);
-      //save userId as the variable declared earlier
-      UserId = data.id;
-      console.log("USER ID: ", UserId)
-      var queryUrl = "/api/all_plans/" + UserId;
+$(document).ready(function () {
+  //This is the API route defined in our user-api-routes page, uses GET request to figure out which user is logged in
+  $.get("/api/user_data").then(function (data) {
+    //save id returned as userId
+    let userId = data.id;
 
-      console.log("QUERY URL: ", queryUrl)
-      
-      $.get(queryUrl, function(userPlans){
-        console.log(userPlans)
+    console.log("USER ID: ", userId)
 
-        for (let i = 0; i < userPlans.length; i++) {
-          var planId = $("<li>")
-          planId.html("Plan Id: " + userPlans[i].id);
+    //Build new query to retrieve plans tied to this user
+    let queryUrl = "/api/all_plans/" + userId;
 
-          var planRange=$("<li>")
-          planRange.html(userPlans[i].start_date + ' - '+ userPlans[i].end_date)
+    console.log("QUERY URL: ", queryUrl)
 
-          var planLink=$("<li>")
-          planLink.html($("<a href='#'>" + "View Plan" + "</a>"))
+    //Use our built url in a GET request to retrieve user plans
+    $.get(queryUrl, function (userPlans) {
 
-          $("#planList").append(planId)
-          $("#planList").append(planRange)
-          $("#planList").append(planLink)
-          $("#planList").append($("<br>"))
-          
-        }
+      //Loop through returned plans and render each to the page
+      for (let i = 0; i < userPlans.length; i++) {
+        var planId = $("<li>")
+        planId.html("Plan Id: " + userPlans[i].id);
 
+        var planRange = $("<li>")
+        planRange.html(userPlans[i].start_date + ' - ' + userPlans[i].end_date)
+
+        var planLink = $("<li>")
+        planLink.html($("<a href='#'>" + "View Plan" + "</a>"))
+
+        $("#planList").append(planId)
+        $("#planList").append(planRange)
+        $("#planList").append(planLink)
+        $("#planList").append($("<br>"))
+      }
     })
-
-    });
-
-    console.log("USER ID: ", UserId)
-
   });
+});
 
