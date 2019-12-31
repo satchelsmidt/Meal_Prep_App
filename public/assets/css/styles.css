@@ -1,75 +1,10 @@
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-  }
+/* Create Plan Elements */
 
-  .addRecipe{
-    margin: 5px;
-  }
-
-  #recipeSearch{
-    color: white;
-  }
-
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-    background-color:#80BD9E;
-    background: url("../images/alternate.jpg") no-repeat center center fixed;
-    background-size: cover;
-  }
-
-  .card-image{
-    height: auto;
-    width: auto;
-  }
-
-  .btn-floating{
-    overflow: auto;
-  }
-
-  .card{
-    padding: 10px;
-  }
-
-  .card > .card-content{
-    overflow: auto;
-    height: auto;
-    width: auto;
-    padding: 10px;
-  }
-
-  #createPlan{
-    clear: both;
-    margin: 0 auto;
-    display: block
-  }
-
-  #recipeCard{
-    margin: 10px;
-    float: left;
-    width: 30%;
-    height: 550px;
-  }
-
-  #recipesReturned{
-    overflow: auto;
-  }
-  .header{
-    opacity: .90;
-    padding: 10px;
-    margin: 10px;
-  }
-
-h3, h4, h5{
-  font-family: 'Fjalla One', sans-serif;
-  opacity: .9;
-}
-
-p, a{
-  font-family: 'Abel', sans-serif;
+#mealPlanStart{
+  padding-left: 10px;
+  color: white;
+  display: inline-block;
+  opacity: .90;
 }
 
 #planDateSubmit{
@@ -77,44 +12,15 @@ p, a{
   margin: 10px;
 }
 
-#finalPlanDiv{
-  width: 70%;
-  float: left; 
+#planRange{
+  margin: 10px auto;
+  opacity: .90;
 }
-
-#shoppingList{
-  width: 25%;
-  float: right;
-}
-
-  #shoppingList, #userPlans{
-    opacity: .90;
-    margin: 20px;
-    padding: 10px;
-  }
-
-  form{
-    clear:both;
-    display: inline-block;
-  }
-
-  #mealPlanStart{
-    /* margin: 10 auto; */
-    padding-left: 10px;
-    /* width: 100%; */
-    color: white;
-    display: inline-block;
-  }
 
 #date{
   overflow: auto;
   width: 500px;
-  margin: 0px;
-  padding: 0px;
-}
-
-li{
-  margin: 0px;
+  margin: 0px 10px;
   padding: 0px;
 }
 
@@ -125,18 +31,149 @@ li{
   padding: 0px;
 }
 
-  #calendar{
-    padding: 10px;
-    opacity: .90;
-    padding-top: 5px;
-    padding-bottom: 5px;
+#recipeSearch{
+  color: white;
+}
+
+  /* Recipe Cards (within Create Plan) */
+  #recipesReturned{
+    overflow: auto;
   }
 
-#background{
+  #recipeCard{
+    margin: 10px;
+    float: left;
+    width: 30%;
+    height: 550px;
+  }
+
+  .card{
+    padding: 10px;
+  }
+
+  .card-image{
+    height: auto;
+    width: auto;
+  }
+
+  .card > .card-content{
+    overflow: auto;
+    height: auto;
+    width: auto;
+    padding: 10px;
+  }
+
+  .addRecipe{
+    margin: 5px;
+  }
+
+  #createPlan{
+    clear: both;
+    margin: 0 auto;
+    display: block
+  }
+
+/* Final Plan Elements */
+
+#calendar {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px;
+  opacity: .90;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#shoppingList{
+  width: 25%;
+  float: right;
+}
+
+#shoppingList, #userPlans{
+  opacity: .90;
+  margin: 20px;
+  padding: 10px;
+}
+
+#finalPlanDiv{
+  width: 70%;
+  float: left; 
+}
+
+#recipeCardFinal{
+  margin: 10px;
+  float: left;
+  width: 30%;
+  height: 250px;
+}
+
+/* Home Page */
+
+#descriptionText{
   opacity: .90;
   padding: 20px;
   color: white;
   margin-bottom: 0px;
+}
+
+/* All Pages */
+
+body {
+  margin: 40px 10px;
+  padding: 0;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+  background-color:#80BD9E;
+  background: url("../images/alternate.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+nav{
+  opacity: .90;
+  margin: 0 auto;
+  padding: 10px;
+  height: 84px;;
+  overflow: auto;
+}
+
+.nav-wrapper{ 
+  opacity: .90;
+}
+
+footer{
+  display: flex;
+  flex-direction: column;
+  opacity: .90;
+  align-content: center;
+  padding: 10px;
+  margin: 10px;
+  flex: 1;
+  clear:both;
+}
+
+/* Misc. */
+
+.btn-floating{
+  overflow: auto;
+}
+
+h3, h4, h5{
+  font-family: 'Fjalla One', sans-serif;
+  opacity: .9;
+}
+
+p, a{
+  font-family: 'Abel', sans-serif;
+}
+
+form{
+  clear:both;
+  display: inline-block;
+}
+
+li{
+  margin: 0px;
+  padding: 0px;
 }
 
 h5{
@@ -145,71 +182,16 @@ h5{
   display: inline-block;
 }
 
-  footer{
-    display: flex;
-    flex-direction: column;
-    opacity: .90;
-    align-content: center;
-    padding: 10px;
-    /* height: 60px; */
-    /* clear: both;
-    overflow: auto; */
-    margin: 10px;
-    flex: 1;
-  }
-/* 
-  body{
-    display: flex;
-    flex-direction: column;
-  } */
+.container{
+  width: 500px;
+  overflow: auto;
+  padding: 10px;
+  border-radius: 25px;    
+  margin-top: 10px;
+  margin-bottom: 10px;
+  opacity: .90;
+}
 
-  .container{
-    /* display: inline-block;
-    position: relative; */
-    /* margin: 0 auto;  */
-    width: 500px;
-    overflow: auto;
-    padding: 10px;
-    border-radius: 25px;    
-    margin-top: 10px;
-    margin-bottom: 10px;
-    /* align-content: center; */
-    opacity: .90;
-  }
-
-  nav{
-    opacity: .90;
-    /* margin: 10px; */
-    margin: 0 auto;
-    padding: 10px;
-    height: 84px;;
-    overflow: auto;
-  }
-
-  .nav-wrapper{ 
-    opacity: .90;
-  }
-
-  a{
-    color: black;
-  }
-
-  /* .row{
-    width: 500px;
-    padding: 20px;
-  } */
-
-  /* .btn-default{
-    background-color: lightgray;
-    border-radius: 25px;
-  } */
-/* 
-  button .dietButton .cuisineButton #recipeSearch{
-    background-color: lightgray;
-    border-radius: 25px;
-  } */
-
-  /* #header{
-    margin-top: 0px;
-    padding-top: 0px;
-  } */
+a{
+  color: black;
+}

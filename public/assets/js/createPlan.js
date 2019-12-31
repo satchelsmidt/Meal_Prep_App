@@ -29,7 +29,7 @@ $("#planDateSubmit").on("click", function (event) {
     planEnd.setDate(planStart.getDate() + 6)
 
     function getDates(planStart, planEnd) {
-        var dateHeader = $("<h5>Times you are available to Prep each day:</h5>")
+        var dateHeader = $("<h5>Input the time slot you are available each day for prepping: </h5>")
         $("#planRange").prepend(dateHeader)
 
         var currentDate = moment(planStart).add(1, 'days');
@@ -210,11 +210,12 @@ $("#recipeSearch").on("click", function (event) {
             ingredientsArr = ingredientsArr.toString();
             stepsArr = stepsArr.toString()
 
-            //Append 'add to plan' button
+            //Create button 'add recipe' that allows user to add recipe to plan
             var addRecipe = $("<button>")
             addRecipe.text("Add recipe to plan!")
             addRecipe.attr("class", "addRecipe")
 
+            //Tie API data for each recipe to the 'add recipe' button
             addRecipe.data("title", recipeTitle)
             addRecipe.data("img", recipeImg)
             addRecipe.data("link", recipeLink)
@@ -224,28 +225,10 @@ $("#recipeSearch").on("click", function (event) {
             addRecipe.data("ingredients", ingredientsArr)
             addRecipe.data("steps", stepsArr)
 
-            console.log(addRecipe)
-
-            // Dynamically create recipe card using variables and string literals
-            // var recipeCard = $(`
-            // <div id='recipeCard' class='col'">
-            //   <div class="card" id='card${i}'>
-            //     <div class="card-image">
-            //     <img src="${recipeImg}" class="card-img-top">
-            //     </div>
-            //     <div class="card-content uniqueContent">
-            //     <span class="card-title">${recipeTitle}</span>
-            //       <p><b>Cuisines:</b> ${recipeCuisines}</p>
-            //       <p><b>Servings:</b> ${recipeServings}</p>
-            //       <p><b>Cook Time:</b> ${recipeTime} Minutes</p>
-            //       <p><a href="${recipeLink}" target="_blank">Link to recipe</a></p>
-            //     </div>
-            //   </div>
-            // </div>
-            // `)
-
+            //Create div to hold each individual recipe card content
             var recipeCard = $("<div id='recipeCard' class='col'>")
 
+            //Use string literal to create template for each recipe card and content within
             var recipeContent = $(`
               <div class="card" id='card${i}'>
                 <div class="card-image">
@@ -260,14 +243,14 @@ $("#recipeSearch").on("click", function (event) {
                 </div>
               </div>`)
 
+            //Append 'add recipe' button to each recipe card template
             recipeContent.append(addRecipe)
 
+            //Append each recipe card template to a recipe card div
             recipeCard.append(recipeContent)
 
-            // $("#card"+i).insertAdjacentHTML('afterend', addRecipe)
-
+            //Apply each full recipe card to a div containing all recipe cards returned
             $("#recipesReturned").append(recipeCard)
-
         }
 
         //After all cards created, append 'create plan' button to finalize plan creation and move to next page
