@@ -1,7 +1,7 @@
 //This file is where the user selects parameters that will make up their plan
 
-//Declare plan id number globally
-var planId
+//Declare plan id number globally so that it is reachable throughout file
+let planId
 
 //Declare time variables globally
 var dateArray = []
@@ -22,57 +22,50 @@ $(document).ready(function () {
     });
 });
 
-//Function which runs to determine user plan start date
+//Determines dates of plan start and end
 $("#planDateSubmit").on("click", function (event) {
     event.preventDefault()
 
-    // var planStart = new Date($('#mealPlanStart').val())
-    var planStart = moment($('#mealPlanStart', 'YYYY-MM-DD').val())
+    //prevent further messing with input field 
+    $('#mealPlanStart').prop('readonly', true)
 
-    console.log('Plan Start Date:', planStart)
+    //Grab value of date picker input
+    let date = $('#mealPlanStart').val()
 
-    var planEnd = moment(planStart, 'YYYY-MM-DD').add(6, 'days')
+    //Use moment.js to format value to legit date format
+    let planStart = moment(date, 'YYYY-MM-DD')
 
-    // var planEnd = new Date();
-    // planEnd.setDate(planStart.getDate() + 6)
-    console.log('Plan End Date: ', planEnd)
+    //Add in an additional 7 days to create week-long range for plan
+    let planEnd = planStart.clone()
+    planEnd.add(6, "days")
 
+    // TODO: add plan start and end dates to database model for each plan
+
+
+    //Iterate through 7 days (starting from input date) and render fields to page appropriately
     function getDates(planStart, planEnd) {
+        //input to render for each date
         var dateHeader = $("<h5>Input the time slot you are available each day for prepping: </h5>")
         $("#planRange").prepend(dateHeader)
 
-        var currentDate = moment(planStart).add(1, 'days');
-        // var currentDate = moment(planStart)
-
-        var beginPlan = currentDate.format("YYYY-MM-DD")
-        // console.log("CURRENT DATE (store locally)", beginPlan)
-        sessionStorage.setItem("planStart", beginPlan)
-
-        var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
-        // var endPlan = moment(planEnd).format("YYYY-MM-DD")
-        // console.log("plan end date in YYYY-MM-DD format:", endPlan)
-        sessionStorage.setItem("planEnd", endPlan)
-
-        var stopDate = moment(planEnd).add(2, 'days')
-        // var stopDate = moment(planEnd)
-
-        while (currentDate <= stopDate) {
-            dayArray.push(moment(currentDate).format('dddd'))
-            dateArray.push(moment(currentDate).format("YYYY-MM-DD"))
-            currentDate = moment(currentDate).add(1, 'days')
+        while (planStart <= planEnd) {
+            dayArray.push(planStart.format('dddd'))
+            dateArray.push(planStart.format("MM-DD-YYYY"))
+            planStart = planStart.add(1, 'days')
         }
+
+        console.log(dayArray)
+        console.log(dateArray)
 
         sessionStorage.setItem("dayArray", dayArray)
         sessionStorage.setItem("dateArray", dateArray)
 
-        //console logs for testing
-        // console.log(dayArray)
-        // console.log(dateArray)
+        //TODO: Stop storing these in session storage, store as JSON stringified array in app and parse when rtrieved
+
 
         //Dynamically create time-range selection boxes
         for (let i = 0; i < dateArray.length; i++) {
-            // var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + " <input type='time' id='time" + i + "01' data-time='" + i + "01'></input> - <input type='time' id='time" + i + "02' data-time='" + i + "02'></input>" + "</li>" + "<br>")
-            // date.attr("id", "date")
+
             var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + "<div class='row'><div class='col-4 border border-3'><input class='timeInput' type='time' id='time" + i + "01' data-time='" + i + "01'></input></div><div class='col-4 border border-3 rounded'><input class='timeInput' type='time' id='time" + i + "02' data-time='" + i + "02'></input></div></div></div>" + "</li>")
             date.attr("id", "date")
 
