@@ -10,11 +10,15 @@ var timeStartArray = []
 var timeEndArray = []
 
 $(document).ready(function () {
-    //GET request to determine which plan is currently being worked on
-    $.get("/api/current_plan").then(function (data) {
-        console.log("Data: ", data)
-        planId = data[0].id;
-        console.log("ID OF THE CURRENT PLAN:", planId)
+    //Retrieve current user id
+    $.get("/api/user_data").then(function (data) {
+        let userId = data.id;
+
+        //GET request to determine most current plan for user (the one we will modify on this page)
+        $.get("/api/current_plan/" + userId).then(function (data) {
+            planId = data[0].id;
+            console.log("current plan id: ", planId)
+        });
     });
 });
 
@@ -22,11 +26,16 @@ $(document).ready(function () {
 $("#planDateSubmit").on("click", function (event) {
     event.preventDefault()
 
-    var planStart = new Date($('#mealPlanStart').val())
-    console.log('selected start date of the plan:', planStart)
+    // var planStart = new Date($('#mealPlanStart').val())
+    var planStart = moment($('#mealPlanStart', 'YYYY-MM-DD').val())
 
-    var planEnd = new Date();
-    planEnd.setDate(planStart.getDate() + 6)
+    console.log('Plan Start Date:', planStart)
+
+    var planEnd = moment(planStart, 'YYYY-MM-DD').add(6, 'days')
+
+    // var planEnd = new Date();
+    // planEnd.setDate(planStart.getDate() + 6)
+    console.log('Plan End Date: ', planEnd)
 
     function getDates(planStart, planEnd) {
         var dateHeader = $("<h5>Input the time slot you are available each day for prepping: </h5>")
@@ -36,12 +45,12 @@ $("#planDateSubmit").on("click", function (event) {
         // var currentDate = moment(planStart)
 
         var beginPlan = currentDate.format("YYYY-MM-DD")
-        console.log("CURRENT DATE (store locally)", beginPlan)
+        // console.log("CURRENT DATE (store locally)", beginPlan)
         sessionStorage.setItem("planStart", beginPlan)
 
         var endPlan = moment(planEnd).add(1, 'days').format("YYYY-MM-DD")
         // var endPlan = moment(planEnd).format("YYYY-MM-DD")
-        console.log("plan end date in YYYY-MM-DD format:", endPlan)
+        // console.log("plan end date in YYYY-MM-DD format:", endPlan)
         sessionStorage.setItem("planEnd", endPlan)
 
         var stopDate = moment(planEnd).add(2, 'days')
@@ -57,8 +66,8 @@ $("#planDateSubmit").on("click", function (event) {
         sessionStorage.setItem("dateArray", dateArray)
 
         //console logs for testing
-        console.log(dayArray)
-        console.log(dateArray)
+        // console.log(dayArray)
+        // console.log(dateArray)
 
         //Dynamically create time-range selection boxes
         for (let i = 0; i < dateArray.length; i++) {
@@ -86,21 +95,17 @@ $(document).on("click", "#submitTimes", function (event) {
     for (let i = 6; i >= 0; i--) {
         // Section where we calculate available timeslots to input on Calendar next page
         var timeOne = $(("#time" + i + "01")).val()
-        console.log("time one:", timeOne)
+        // console.log("time one:", timeOne)
         timeStartArray.push(timeOne)
 
         var timeTwo = $(("#time" + i + "02")).val()
-        console.log("time two:", timeTwo)
+        // console.log("time two:", timeTwo)
 
         timeEndArray.push(timeTwo)
     }
 
     sessionStorage.setItem("timeStartArray", timeStartArray)
     sessionStorage.setItem("timeEndArray", timeEndArray)
-
-    // Console logs for testing
-    console.log('array of start times: ', timeStartArray)
-    console.log('array of end times: ', timeEndArray)
 });
 
 //cuisine types to include in search (can be comma separated list)
@@ -117,7 +122,7 @@ $(".cuisineButton").on("click", function () {
         cuisines += ("," + cuisine)
     }
     $(this).attr("disabled", true)
-    console.log("CUISINE:", cuisine)
+    // console.log("CUISINE:", cuisine)
 })
 
 //Same functionality as cuisine var and function, only adds dietary preferences
@@ -132,7 +137,7 @@ $(".dietButton").on("click", function () {
         diets += ("," + diet)
     }
     $(this).attr("disabled", true)
-    console.log("DIET:", diet)
+    // console.log("DIET:", diet)
 })
 
 //Same functionality as cuisine/diet var and function, only adds intolerances
@@ -147,7 +152,7 @@ $(".intoleranceButton").on("click", function () {
         intolerances += ("," + intolerance)
     }
     $(this).attr("disabled", true)
-    console.log("INTOLERANCE:", intolerance)
+    // console.log("INTOLERANCE:", intolerance)
 })
 
 //TODO:
@@ -170,11 +175,13 @@ $("#recipeSearch").on("click", function (event) {
 
     var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&intolerances=" + intolerances + "&number=5&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
 
+
+
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (data) {
-        console.log("Data Returned: ", data)
+        // console.log("Data Returned: ", data)
 
         //Loop through data returned from AJAX call
         for (let i = 0; i < data.results.length; i++) {
@@ -253,8 +260,11 @@ $("#recipeSearch").on("click", function (event) {
             $("#recipesReturned").append(recipeCard)
         }
 
+        
+
         //After all cards created, append 'create plan' button to finalize plan creation and move to next page
-        var createPlan = $("<button>")
+        var 
+        createPlan = $("<button>")
         createPlan.attr("id", "createPlan")
         createPlan.attr("class", "btn waves-effect waves-light pink")
         createPlan.text("CREATE YOUR PLAN!")
@@ -270,7 +280,7 @@ var count = 1
 
 $(document).on("click", ".addRecipe", function (event) {
 
-    console.log("COUNT OF YOUR COUNT VARIABLE:", count)
+    // console.log("COUNT OF YOUR COUNT VARIABLE:", count)
     $(this).attr("disabled", true)
     event.preventDefault()
 
@@ -293,16 +303,16 @@ $(document).on("click", ".addRecipe", function (event) {
         recipe_ingredients: theActualRecipeIngredients,
         recipe_steps: theActualRecipeSteps,
     }
-    console.log(recipeDetails)
+    // console.log(recipeDetails)
 
     $.post("/api/recipes", recipeDetails, function (data) {
-        console.log("THIS IS YOUR DATA:", data)
+        // console.log("THIS IS YOUR DATA:", data)
     }).then(function () {
 
         for (let i = count; i > 0; i--) {
             $.get("/api/recipes_desc").then(function (data) {
 
-                console.log("time for each recipe: ", parseInt(data[0].recipe_time))
+                // console.log("time for each recipe: ", parseInt(data[0].recipe_time))
 
                 totalRecipeMins = totalRecipeMins + parseInt(data[0].recipe_time)
 
@@ -312,21 +322,20 @@ $(document).on("click", ".addRecipe", function (event) {
                 //     return
                 // }
 
-                console.log("This is your data (desc_id):", data)
+                // console.log("This is your data (desc_id):", data)
                 recipeIdArr.push(data[0].id);
-
-                console.log("THIS SHOULD BE THE array of recipes we have selected:", recipeIdArr)
-                console.log("total Recipes selected time: ", totalRecipeMins)
             })
         }
     })
 });
 
+
+
 $(document).on("click", "#createPlan", function (event) {
 
-    console.log("CLICKED A BUTTON (create plan)")
+    // console.log("CLICKED A BUTTON (create plan)")
     event.preventDefault()
-    location.href = "/finalPlan"
+    location.href = "/plans/" + planId
 
     for (let i = 0; i < recipeIdArr.length; i++) {
 
@@ -335,11 +344,11 @@ $(document).on("click", "#createPlan", function (event) {
             PlanId: planId
         }
 
-        console.log("Data we are sending:", planRecipeDetails)
+        // console.log("Data we are sending:", planRecipeDetails)
 
         $.post("/api/recipe_plans", planRecipeDetails, function (data) {
-            console.log("reached post request")
-            console.log("THIS IS YOUR DATA(list of recipes selected + linked plans?):", data)
+            // console.log("reached post request")
+            // console.log("THIS IS YOUR DATA(list of recipes selected + linked plans?):", data)
         })
     }
-})
+});

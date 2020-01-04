@@ -8,6 +8,9 @@ var finalRecipeDiv
 //Global ingredients array
 const ingredients = []
 
+//Declare plan id
+var planId
+
 //Time variables (retrieved from sessionStorage)
 var planStart = sessionStorage.getItem("planStart")
 var planEnd = sessionStorage.getItem("planEnd")
@@ -23,7 +26,11 @@ var timeEndArray = sessionStorage.getItem("timeEndArray").split(',').reverse()
 // Document function which displays recipe cards that correspond with current plan
 $("document").ready(function () {
 
-    $.get("/api/final_plan").then(function (data) {
+    planId = parseInt(window.location.href.substring(window.location.href.lastIndexOf('/') + 1))
+
+    console.log('plan id: ', planId)
+
+    $.get("/api/final_plan/" + planId).then(function (data) {
         console.log("Data: ", data)
 
         //Loop through all recipes in final plan and display cards for each
@@ -118,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         var realend = moment(planend).format()
 
-        console.log("real plan starts: ", realstart)
-        console.log("real plan ends: ", realend)
+        // console.log("real plan starts: ", realstart)
+        // console.log("real plan ends: ", realend)
 
         var event = {
             title: "Recipe " + (i + 1),
@@ -127,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
             end: planend
         }
 
-        console.log("this is what your custom event looks like: ", event)
+        // console.log("this is what your custom event looks like: ", event)
 
         calendar.addEvent(event)
     }

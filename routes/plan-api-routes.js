@@ -1,85 +1,16 @@
-//Require our db model
-var db = require("../models")
-
 //setup export to server file
 module.exports = function (app) {
 
-    // This route is hit when the user clicks 'View Plans' from the home screen and navigates to the plans screen. It finds all plans associated with the current user and displays them on the page
-    //Tied to plans.js
-    //Actually may not be needed? 
+    //Require our db model
+    const db = require("../models")
 
-    // app.get("/api/plans", function (req, res) {
-    //     db.Plan.findAll(req.body, {
-    //         // include: [
-    //         //     { model: db.User }
-    //         // ]
-    //     }).then(function (data) {
-    //         res.json(data);
-    //     })
-    // })
-
-    //api route to return current plan being worked on ()
-    app.get("/api/current_plan", function (req, res) {
-
-        var query = {};
-        if (req.query.UserId) {
-            query.UserId = req.query.UserId;
-        }
-
-        //TODO: modify this query to be able to return all plans tied to CURRENT user id
-        //right now, returns max plan id (which will always be the one just created, which is fine for create plan purposes but not long term)
-        db.Plan.findAll(
-            // req.body, 
-            {
-                where: query,
-                include: [db.User],
-                // attributes: [
-                //     Sequelize.fn('MAX', Sequelize.col('id'))
-                //  ],
-                order: [
-                    ['id', 'DESC']
-                ],
-                limit: 1
-                // include: [
-                //     { model: db.User }
-                // ]
-            }).then(function (data) {
-                console.log("CURRENT PLAN? : ", data)
-                res.json(data);
-            })
-    })
+    let planId = 'placeholder'
 
     //TODO: create API route to return plan based on id, build a unique link for each plan using this
-
-    //api route to return all plans created by current user
-    app.get("/api/all_plans/:UserId", function (req, res) {
-        console.log("req.params back end:", req.params)
-        // var query = {};
-        // if (req.query.UserId) {
-        //   query.UserId = req.query.UserId;
-        // }
-        //TODO: modify this query to be able to return all plans tied to CURRENT user id
-        //right now, returns max plan id (which will always be the one just created, which is fine for create plan purposes but not long term)
-        db.Plan.findAll(
-            // req.body, 
-            {
-                where: {
-                    UserId: req.params.UserId
-                }
-                // include: [db.User],
-
-            }).then(function (data) {
-                console.log("all plans:", data)
-                res.json(data);
-            })
-    })
-
-    app.post("/api/plans", function (req, res) {
+    app.post("/api/plans/" + planId, function (req, res) {
         console.log(req.body)
-        db.Plan.create(req.body, {
-            // include: [
-            //     {model: db.User}
-            // ]
+        db.Plan.findOne(req.body, {
+            where: {}
         })
             .then(function (data) {
                 console.log("data returned from api/plans POST request")
@@ -96,4 +27,44 @@ module.exports = function (app) {
             })
     })
 
+
+    //Cleared
+
+    //API route hit on home.js when user clicks 'create plan'
+    //Creates new plan tied to current user
+    app.post("/api/plans", function (req, res) {
+        db.Plan.create(req.body, {
+        })
+            .then(function (data) {
+                res.json(data)
+            });
+    });
+
+    //API route that returns all plans tied to current user
+    app.get("/api/all_plans/:UserId", function (req, res) {
+        db.Plan.findAll(
+            {
+                where: {
+                    UserId: req.params.UserId
+                }
+            }).then(function (data) {
+                res.json(data);
+            })
+    })
+
+    //api route that returns most recent user plan (called on create.js page load, immediately after new plan is added to db)
+    app.get("/api/current_plan/:UserId", function (req, res) {
+        db.Plan.findAll(
+            {
+                where: {
+                    UserId: req.params.UserId
+                },
+                order: [
+                    ['id', 'DESC']
+                ],
+                limit: 1
+            }).then(function (data) {
+                res.json(data);
+            })
+    })
 };

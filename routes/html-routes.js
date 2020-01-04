@@ -24,18 +24,27 @@ module.exports = function (app) {
             res.redirect("/home");
         }
         res.sendFile(path.join(__dirname, "../public/assets/html/signUp.html"))
-
     })
 
     app.get("/createPlan", isAuthenticated, function (req, res) {
         res.sendFile(path.join(__dirname, "../public/assets/html/createPlan.html"))
     });
 
-    app.get("/finalPlan", isAuthenticated, function (req, res) {
-        res.sendFile(path.join(__dirname, "../public/assets/html/finalPlan.html"))
-    });
+    // app.get("/finalPlan", isAuthenticated, function (req, res) {
+    //     res.sendFile(path.join(__dirname, "../public/assets/html/finalPlan.html"))
+    // });
 
     app.get("/plans", isAuthenticated, function (req, res) {
         res.sendFile(path.join(__dirname, "../public/assets/html/plans.html"))
+    });
+    
+
+
+    /////////////////////        IN PROGRESS        //////////////////
+    app.get("/plans/:planId", isAuthenticated, function (req, res) {
+
+        // req.params.planId = id
+
+        res.sendFile(path.join(__dirname, "../public/assets/html/finalPlan.html"))
     });
 }

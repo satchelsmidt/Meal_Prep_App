@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    //clear local storage or something
+    localStorage.clear()
+
+    console.log(localStorage)
+
     // Getting references to our form and inputs
     var loginForm = $("form.login");
     var userNameInput = $("input#user-name-input");
