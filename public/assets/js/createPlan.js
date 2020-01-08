@@ -1,13 +1,7 @@
 //This file is where the user selects parameters that will make up their plan
 
-//Declare plan id number globally so that it is reachable throughout file
+//Declare plan id/date array globally so they are reachable throughout file
 let planId
-
-//Declare time variables globally
-var dateArray = []
-var dayArray = []
-var timeStartArray = []
-var timeEndArray = []
 
 $(document).ready(function () {
     //Retrieve current user id
@@ -67,6 +61,10 @@ $("#planDateSubmit").on("click", function (event) {
 
 //Iterate through 7 days (starting from input date) and render user time input fields to page appropriately
 function getDates(planStart, planEnd) {
+
+    //declare our array to store day names
+    let dayArray = []
+
     //input to render for each date
     var dateHeader = $("<h5>Input the time slot you are available each day for prepping: </h5>")
     $("#planRange").prepend(dateHeader)
