@@ -12,14 +12,14 @@ const ingredients = []
 var planId
 
 //Time variables (retrieved from sessionStorage)
-var planStart = sessionStorage.getItem("planStart")
-var planEnd = sessionStorage.getItem("planEnd")
+// var planStart = sessionStorage.getItem("planStart")
+// var planEnd = sessionStorage.getItem("planEnd")
 
-var dateArray = sessionStorage.getItem("dateArray").split(',')
+// var dateArray = sessionStorage.getItem("dateArray").split(',')
 
-var timeStartArray = sessionStorage.getItem("timeStartArray").split(',').reverse()
+// var timeStartArray = sessionStorage.getItem("timeStartArray").split(',').reverse()
 
-var timeEndArray = sessionStorage.getItem("timeEndArray").split(',').reverse()
+// var timeEndArray = sessionStorage.getItem("timeEndArray").split(',').reverse()
 
 // Document function which displays recipe cards that correspond with current plan
 $("document").ready(function () {
@@ -78,64 +78,64 @@ $("document").ready(function () {
     });
 })
 
-document.addEventListener('DOMContentLoaded', function () {
+// document.addEventListener('DOMContentLoaded', function () {
 
-    var calendarEl = document.getElementById('calendar');
+//     var calendarEl = document.getElementById('calendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['dayGrid', 'timeGrid'],
-        defaultView: 'timeGrid',
-        visibleRange: {
-            start: planStart,
-            end: planEnd
-        },
-        header: {
-            left: '',
-            center: 'title',
-            right: ''
-        },
-        events: [
-            {
-                title: 'Pasta e Fagiolo',
-                start: "2019-10-13T20:00:00",
-                end: "2019-10-13T21:00:00",
-                url: 'http://www.simplyrecipes.com/recipes/pasta_e_fagioli/'
-            }
-        ],
-        eventClick: function (event) {
-            if (event.url) {
-                window.open(event.url, "_blank");
-                return false;
-            }
-        }
-    });
+//     var calendar = new FullCalendar.Calendar(calendarEl, {
+//         plugins: ['dayGrid', 'timeGrid'],
+//         defaultView: 'timeGrid',
+//         visibleRange: {
+//             start: planStart,
+//             end: planEnd
+//         },
+//         header: {
+//             left: '',
+//             center: 'title',
+//             right: ''
+//         },
+//         events: [
+//             {
+//                 title: 'Pasta e Fagiolo',
+//                 start: "2019-10-13T20:00:00",
+//                 end: "2019-10-13T21:00:00",
+//                 url: 'http://www.simplyrecipes.com/recipes/pasta_e_fagioli/'
+//             }
+//         ],
+//         eventClick: function (event) {
+//             if (event.url) {
+//                 window.open(event.url, "_blank");
+//                 return false;
+//             }
+//         }
+//     });
 
-    console.log("this is calendar: ", calendar)
+//     console.log("this is calendar: ", calendar)
 
-    calendar.render();
+//     calendar.render();
 
-    for (let i = 0; i < dateArray.length; i++) {
-        var planstart = dateArray[i] + "T" + timeStartArray[i] + ":00"
+//     for (let i = 0; i < dateArray.length; i++) {
+//         var planstart = dateArray[i] + "T" + timeStartArray[i] + ":00"
 
-        var realstart = moment(planstart).format()
+//         var realstart = moment(planstart).format()
 
-        var planend = dateArray[i] + "T" + timeEndArray[i] + ":00"
+//         var planend = dateArray[i] + "T" + timeEndArray[i] + ":00"
 
-        var realend = moment(planend).format()
+//         var realend = moment(planend).format()
 
-        // console.log("real plan starts: ", realstart)
-        // console.log("real plan ends: ", realend)
+//         // console.log("real plan starts: ", realstart)
+//         // console.log("real plan ends: ", realend)
 
-        var event = {
-            title: "Recipe " + (i + 1),
-            start: planstart,
-            end: planend
-        }
+//         var event = {
+//             title: "Recipe " + (i + 1),
+//             start: planstart,
+//             end: planend
+//         }
 
-        // console.log("this is what your custom event looks like: ", event)
+//         // console.log("this is what your custom event looks like: ", event)
 
-        calendar.addEvent(event)
-    }
+//         calendar.addEvent(event)
+//     }
 
-    $("#calendar").prepend("<h5>Calendar</h5>")
-});
+//     $("#calendar").prepend("<h5>Calendar</h5>")
+// });
