@@ -14,24 +14,6 @@ module.exports = function (app) {
             })
     })
 
-    //route to update plan that is in the process of being created
-    app.put("/api/plans", function (req, res) {
-        // console.log("Reached this point")
-        // console.log('PAREMETERESSS: ', req)
-
-        db.Plan.update(
-            req.body,
-            {
-                where: {
-                    id: req.body.id
-                }
-            }).then(function (data) {
-                console.log('did this work? ')
-                res.json(data)
-            })
-    })
-
-
     //Cleared
 
     //API route hit on home.js when user clicks 'create plan'
@@ -92,4 +74,18 @@ module.exports = function (app) {
             res.json(recipeArr)
         })
     });
+
+    //route to update plan that is in the process of being created
+    app.put("/api/plans", function (req, res) {
+        db.Plan.update(
+            req.body,
+            {
+                where: {
+                    id: req.body.id
+                }
+            }).then(function (data) {
+                console.log('did this work? ')
+                res.json(data)
+            })
+    })
 };
