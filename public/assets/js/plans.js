@@ -17,11 +17,15 @@ $(document).ready(function () {
 
       //Loop through returned plans and render each to the page as list items
       for (let i = 0; i < userPlans.length; i++) {
+
+        console.log(userPlans[i].start_date)
+        console.log(moment(userPlans[i].start_date).format("MM-DD-YYYY"))
+
         var planId = $("<li>")
         planId.html("Plan Id: " + userPlans[i].id);
 
         var planRange = $("<li>")
-        planRange.html(userPlans[i].start_date + ' - ' + userPlans[i].end_date)
+        planRange.html(userPlans[i].start_date + ' — ' + userPlans[i].end_date)
 
         var planLink = $("<li>")
         planLink.html($("<a id='planLink' data-id='" + userPlans[i].id + "' href='/plans/" + userPlans[i].id + "'>" + "View Plan" + "</a>"))

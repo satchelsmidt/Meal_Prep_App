@@ -30,5 +30,10 @@ module.exports = function (app) {
                 res.json(data)
             });
     });
+
+    // //External API call here
+    // app.post("/api/external", function (req, res){
+    //     let queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&intolerances=" + intolerances + "&number=5&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
+    // })
     
 };

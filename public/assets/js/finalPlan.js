@@ -17,8 +17,6 @@ var planEnd = sessionStorage.getItem("planEnd")
 
 var dateArray = sessionStorage.getItem("dateArray").split(',')
 
-var dayArray = sessionStorage.getItem("dayArray").split(',')
-
 var timeStartArray = sessionStorage.getItem("timeStartArray").split(',').reverse()
 
 var timeEndArray = sessionStorage.getItem("timeEndArray").split(',').reverse()

@@ -39,42 +39,23 @@ $("#planDateSubmit").on("click", function (event) {
     let planEnd = planStart.clone()
     planEnd.add(6, "days")
 
-    ////////////////////// IN PROGRESS ////////////////////////////////
-
-    // TODO: add plan start and end dates to database model for each plan
-
+    //Create object holding data + values we want to update for plan
     let planData = {
         id: planId,
-        start_date: planStart,
-        end_date: planEnd
+        start_date: planStart.format("MM-DD-YYYY"),
+        end_date: planEnd.format("MM-DD-YYYY")
     }
 
     //post to api route that grabs plan (based on id) and inserts start + end data into it
-    // $.post("/api/update_plan/" + planData).then(function (data) {
-    //     console.log('THIS IS DATA: ', data)
-    // });
+    $.ajax({
+        method: "PUT",
+        url: "api/plans",
+        data: planData
+    }).then(function (data) {
 
-    // $.post("/api/update_plan/", function (req, res, next) {
-    //     req.locals.custom = true;
-    //     req.locals.myObject = {
-    //         id: planId,
-    //         start_date: planStart,
-    //         end_date: planEnd
-    //     };
-    //     next();
-    // },
-    // function(req, res){
-    //     console.log("THIS: ", req.locals.myObject)
-    //     return res.status(200).send(req.locals.myObject)
-    // });
-
-
-    // $.post("/api/recipes", recipeDetails, function (data) {
-    //     // console.log("THIS IS YOUR DATA:", data)
-    // }).then(function () {
-
-    //run function to render time input fields
-    getDates(planStart, planEnd)
+        //run function to render time input fields
+        getDates(planStart, planEnd)
+    })
 
     //Create button for user to submit the inputted times
     var submitTimes = $("<button>")
@@ -97,11 +78,20 @@ function getDates(planStart, planEnd) {
         planStart = planStart.add(1, 'days')
     }
 
-    //TODO: Stop storing these in session storage, store as JSON stringified array in app and parse when rtrieved
     console.log(dayArray)
     console.log(dateArray)
-    sessionStorage.setItem("dayArray", dayArray)
-    sessionStorage.setItem("dateArray", dateArray)
+
+    // //Save date info to plan in form of string
+    // let planDates = {
+    //     plan_dates: JSON.stringify(dateArray)
+    // }
+
+    // //Send updatd date info to plan object
+    // $.ajax({
+    //     method: "PUT",
+    //     url: "api/plans",
+    //     data: planDates
+    // })
 
     //Dynamically create time-range selection boxes
     for (let i = 0; i < dateArray.length; i++) {
@@ -180,7 +170,7 @@ $(".cuisineButton").on("click", function () {
     //TODO: future development, user clicks button again to remove item from list
 })
 
-//Same functionality as cuisine var and function, only adds dietary preferences
+//Same functionality as cuisine buttons, only adds dietary preferences
 var diets = ""
 
 $(".dietButton").on("click", function () {
@@ -192,10 +182,9 @@ $(".dietButton").on("click", function () {
         diets += ("," + diet)
     }
     $(this).attr("disabled", true)
-    // console.log("DIET:", diet)
 })
 
-//Same functionality as cuisine/diet var and function, only adds intolerances
+//Same functionality as cuisine/diet
 var intolerances = ""
 
 $(".intoleranceButton").on("click", function () {
@@ -207,30 +196,27 @@ $(".intoleranceButton").on("click", function () {
         intolerances += ("," + intolerance)
     }
     $(this).attr("disabled", true)
-    // console.log("INTOLERANCE:", intolerance)
 })
 
 //TODO:
-//1. cuisine types to NOT include in search (can be comma separated list). Similar construction to existing params
+//Add cuisine types to NOT include in search (can be comma separated list). Similar construction to existing params
 var dontLike = "Greek"
 
 //Where we define all of the data we would like to return from our AJAX call for later storage in our DB
-var recipeTitle
-var recipeImg
-var recipeLink
-var recipeCuisines
-var recipeTime
-var recipeServings
-var ingredientsArr
-var stepsArr
+let recipeTitle
+let recipeImg
+let recipeLink
+let recipeCuisines
+let recipeTime
+let recipeServings
+let ingredientsArr
+let stepsArr
 
 $("#recipeSearch").on("click", function (event) {
 
     event.preventDefault()
 
     var queryURL = "https://api.spoonacular.com/recipes/complexSearch?cuisine=" + cuisines + "&diet=" + diets + "&intolerances=" + intolerances + "&number=5&addRecipeInformation=true&apiKey=10fd6276ba57493797da32beaf541d00"
-
-
 
     $.ajax({
         url: queryURL,

@@ -15,22 +15,20 @@ module.exports = function (app) {
     })
 
     //route to update plan that is in the process of being created
-    app.post("/api/update_plan", function (req, res) {
-        console.log("Reached this point")
-        console.log(req.params)
-        console.log(req.params.id)
+    app.put("/api/plans", function (req, res) {
+        // console.log("Reached this point")
+        // console.log('PAREMETERESSS: ', req)
 
-        db.Plan.findOne({
-            where: { id: req.params.id }
-        }).then()
-        db.Plan.update({
-            start_date: req.params.start_date,
-            end_date: req.params.end_date
-        }, {
-            where: { id: req.params.id }
-        }).then(function (data) {
-            res.json(data)
-        })
+        db.Plan.update(
+            req.body,
+            {
+                where: {
+                    id: req.body.id
+                }
+            }).then(function (data) {
+                console.log('did this work? ')
+                res.json(data)
+            })
     })
 
 
