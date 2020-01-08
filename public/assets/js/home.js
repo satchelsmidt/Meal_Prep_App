@@ -14,10 +14,6 @@ $(document).ready(function () {
     //save userId as the variable declared earlier
     userId = data.id;
     console.log("ID of logged in user:", userId)
-
-    //set userId in local storage (to use throughout app)
-    // TODO: replace w/ api call each time id is needed, much safer
-    localStorage.setItem("userId", userId)
   });
 });
 
