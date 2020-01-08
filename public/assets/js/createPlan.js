@@ -130,8 +130,8 @@ $(document).on("click", "#submitTimes", function () {
     console.log('array of start and end times: ', timesArr)
 
     //TODO: Stop storing locally
-    sessionStorage.setItem("timeStartArray", timeStartArray)
-    sessionStorage.setItem("timeEndArray", timeEndArray)
+    // sessionStorage.setItem("timeStartArray", timeStartArray)
+    // sessionStorage.setItem("timeEndArray", timeEndArray)
 
     //////////////OLD METHOD (Still used to generate calendar)/////////
     // //loop through all dates in plan
