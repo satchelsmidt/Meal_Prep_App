@@ -31,6 +31,11 @@
   padding: 0px;
 }
 
+#submitTimes{
+  margin: 25px;
+  margin-top: 0px;
+}
+
 #recipeSearch{
   color: white;
 }

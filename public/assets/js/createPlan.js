@@ -39,66 +39,126 @@ $("#planDateSubmit").on("click", function (event) {
     let planEnd = planStart.clone()
     planEnd.add(6, "days")
 
+    ////////////////////// IN PROGRESS ////////////////////////////////
+
     // TODO: add plan start and end dates to database model for each plan
 
-
-    //Iterate through 7 days (starting from input date) and render fields to page appropriately
-    function getDates(planStart, planEnd) {
-        //input to render for each date
-        var dateHeader = $("<h5>Input the time slot you are available each day for prepping: </h5>")
-        $("#planRange").prepend(dateHeader)
-
-        while (planStart <= planEnd) {
-            dayArray.push(planStart.format('dddd'))
-            dateArray.push(planStart.format("MM-DD-YYYY"))
-            planStart = planStart.add(1, 'days')
-        }
-
-        console.log(dayArray)
-        console.log(dateArray)
-
-        sessionStorage.setItem("dayArray", dayArray)
-        sessionStorage.setItem("dateArray", dateArray)
-
-        //TODO: Stop storing these in session storage, store as JSON stringified array in app and parse when rtrieved
-
-
-        //Dynamically create time-range selection boxes
-        for (let i = 0; i < dateArray.length; i++) {
-
-            var date = $("<li>" + dayArray[i] + ", " + dateArray[i] + "<br>" + "<div class='row'><div class='col-4 border border-3'><input class='timeInput' type='time' id='time" + i + "01' data-time='" + i + "01'></input></div><div class='col-4 border border-3 rounded'><input class='timeInput' type='time' id='time" + i + "02' data-time='" + i + "02'></input></div></div></div>" + "</li>")
-            date.attr("id", "date")
-
-            $("#dates").append(date)
-        }
+    let planData = {
+        id: planId,
+        start_date: planStart,
+        end_date: planEnd
     }
 
+    //post to api route that grabs plan (based on id) and inserts start + end data into it
+    // $.post("/api/update_plan/" + planData).then(function (data) {
+    //     console.log('THIS IS DATA: ', data)
+    // });
+
+    // $.post("/api/update_plan/", function (req, res, next) {
+    //     req.locals.custom = true;
+    //     req.locals.myObject = {
+    //         id: planId,
+    //         start_date: planStart,
+    //         end_date: planEnd
+    //     };
+    //     next();
+    // },
+    // function(req, res){
+    //     console.log("THIS: ", req.locals.myObject)
+    //     return res.status(200).send(req.locals.myObject)
+    // });
+
+
+    // $.post("/api/recipes", recipeDetails, function (data) {
+    //     // console.log("THIS IS YOUR DATA:", data)
+    // }).then(function () {
+
+    //run function to render time input fields
     getDates(planStart, planEnd)
 
     //Create button for user to submit the inputted times
     var submitTimes = $("<button>")
     submitTimes.attr("id", "submitTimes")
+    submitTimes.attr("class", "btn waves-effect waves-light pink")
     submitTimes.text("Submit Times")
     $("#planRange").append(submitTimes)
 })
 
-//Function that calculates available time throughout the week for the user based on inputs above
-$(document).on("click", "#submitTimes", function (event) {
+//Iterate through 7 days (starting from input date) and render user time input fields to page appropriately
+function getDates(planStart, planEnd) {
+    //input to render for each date
+    var dateHeader = $("<h5>Input the time slot you are available each day for prepping: </h5>")
+    $("#planRange").prepend(dateHeader)
 
-    for (let i = 6; i >= 0; i--) {
-        // Section where we calculate available timeslots to input on Calendar next page
-        var timeOne = $(("#time" + i + "01")).val()
-        // console.log("time one:", timeOne)
-        timeStartArray.push(timeOne)
-
-        var timeTwo = $(("#time" + i + "02")).val()
-        // console.log("time two:", timeTwo)
-
-        timeEndArray.push(timeTwo)
+    //loop from plan start to end
+    while (planStart <= planEnd) {
+        dayArray.push(planStart.format('dddd'))
+        dateArray.push(planStart.format("MM-DD-YYYY"))
+        planStart = planStart.add(1, 'days')
     }
 
+    //TODO: Stop storing these in session storage, store as JSON stringified array in app and parse when rtrieved
+    console.log(dayArray)
+    console.log(dateArray)
+    sessionStorage.setItem("dayArray", dayArray)
+    sessionStorage.setItem("dateArray", dateArray)
+
+    //Dynamically create time-range selection boxes
+    for (let i = 0; i < dateArray.length; i++) {
+
+        var date = $("<li>" +
+            dayArray[i] +
+            ", " +
+            dateArray[i] +
+            "<br>" +
+            "<div class='row'><div class='col-4 border border-3'><input class='timeInput' type='time' id='time" + i + "01' data-time='" + i + "01'></input></div><div class='col-4 border border-3 rounded'><input class='timeInput' type='time' id='time" + i + "02' data-time='" + i + "02'></input></div></div></div>" +
+            "</li>")
+
+        //set id of created element
+        date.attr("id", "date")
+
+        //append to page
+        $("#dates").append(date)
+    }
+}
+
+//Function that calculates available time throughout the week for the user based on inputs above
+$(document).on("click", "#submitTimes", function () {
+
+    let timesArr = []
+
+    //loop through all dates in plan
+    for (let i = 0; i <= dateArray.length - 1; i++) {
+
+        //grab id's (dynamically generated) of each input slot
+        let timeOne = $(("#time" + i + "01")).val()
+        let timeTwo = $(("#time" + i + "02")).val()
+
+        // push each time range as an array into the predefined array
+        timesArr.push([timeOne, timeTwo])
+    }
+
+    console.log('array of start and end times: ', timesArr)
+
+    //TODO: Stop storing locally
     sessionStorage.setItem("timeStartArray", timeStartArray)
     sessionStorage.setItem("timeEndArray", timeEndArray)
+
+    //////////////OLD METHOD (Still used to generate calendar)/////////
+    // //loop through all dates in plan
+    // for (let i = dateArray.length; i >= 0 ; i--) {
+
+    //     //grab id's (dynamically generated) of each input slot
+    //     var timeOne = $(("#time" + i + "01")).val()
+
+    //     // console.log("time one:", timeOne)
+    //     timeStartArray.push(timeOne)
+
+    //     var timeTwo = $(("#time" + i + "02")).val()
+    //     // console.log("time two:", timeTwo)
+
+    //     timeEndArray.push(timeTwo)
+    // }
 });
 
 //cuisine types to include in search (can be comma separated list)
@@ -114,8 +174,10 @@ $(".cuisineButton").on("click", function () {
     else {
         cuisines += ("," + cuisine)
     }
+    //make button unclickable after clicked
     $(this).attr("disabled", true)
-    // console.log("CUISINE:", cuisine)
+
+    //TODO: future development, user clicks button again to remove item from list
 })
 
 //Same functionality as cuisine var and function, only adds dietary preferences
@@ -253,17 +315,17 @@ $("#recipeSearch").on("click", function (event) {
             $("#recipesReturned").append(recipeCard)
         }
 
-        
+
 
         //After all cards created, append 'create plan' button to finalize plan creation and move to next page
-        var 
-        createPlan = $("<button>")
+        var
+            createPlan = $("<button>")
         createPlan.attr("id", "createPlan")
         createPlan.attr("class", "btn waves-effect waves-light pink")
         createPlan.text("CREATE YOUR PLAN!")
 
-        $("#submission").append($("<br>"))
-        $("#submission").append(createPlan)
+        $("#submitPlan").append($("<br>"))
+        $("#submitPlan").append(createPlan)
     })
 })
 

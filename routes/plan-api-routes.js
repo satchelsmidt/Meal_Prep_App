@@ -4,19 +4,6 @@ module.exports = function (app) {
     //Require our db model
     const db = require("../models")
 
-    let planId = 'placeholder'
-
-    //TODO: create API route to return plan based on id, build a unique link for each plan using this
-    app.post("/api/plans/" + planId, function (req, res) {
-        console.log(req.body)
-        db.Plan.findOne(req.body, {
-            where: {}
-        })
-            .then(function (data) {
-                console.log("data returned from api/plans POST request")
-                res.json(data)
-            });
-    });
 
     app.post("/api/recipe_plans", function (req, res) {
         console.log("req.body: ", req.body)
@@ -25,6 +12,25 @@ module.exports = function (app) {
             .then(function (data) {
                 res.json(data)
             })
+    })
+
+    //route to update plan that is in the process of being created
+    app.post("/api/update_plan", function (req, res) {
+        console.log("Reached this point")
+        console.log(req.params)
+        console.log(req.params.id)
+
+        db.Plan.findOne({
+            where: { id: req.params.id }
+        }).then()
+        db.Plan.update({
+            start_date: req.params.start_date,
+            end_date: req.params.end_date
+        }, {
+            where: { id: req.params.id }
+        }).then(function (data) {
+            res.json(data)
+        })
     })
 
 
@@ -67,4 +73,25 @@ module.exports = function (app) {
                 res.json(data);
             })
     })
+
+    //This API call searches for the plan corresponding to the page the user is on (in the url), and returns plan info + linked recipe info
+    app.get("/api/final_plan/:planId", function (req, res) {
+        db.Plan.findOne({
+            where: { id: req.params.planId },
+            include: [{ model: db.Recipe }]
+        }).then(function (dbPlan) {
+            console.log("db PLAN:", dbPlan)
+
+            //declare an empty array to hold our returned recipes
+            const recipeArr = []
+
+            //Loop through each recipe in the recipe array (tied to the plan searched)
+            for (let i = 0; i < dbPlan.Recipes.length; i++) {
+                var recipeData = dbPlan.Recipes[i]
+                // push recipe data to our recipe array
+                recipeArr.push(recipeData)
+            }
+            res.json(recipeArr)
+        })
+    });
 };
