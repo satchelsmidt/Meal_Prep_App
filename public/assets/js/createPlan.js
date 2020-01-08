@@ -2,6 +2,7 @@
 
 //Declare plan id/date array globally so they are reachable throughout file
 let planId
+let dateArray = []
 
 $(document).ready(function () {
     //Retrieve current user id
