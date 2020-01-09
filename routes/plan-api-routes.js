@@ -62,16 +62,16 @@ module.exports = function (app) {
         }).then(function (dbPlan) {
             console.log("db PLAN:", dbPlan)
 
-            //declare an empty array to hold our returned recipes
-            const recipeArr = []
+            // //declare an empty array to hold our returned recipes
+            // const recipeArr = []
 
-            //Loop through each recipe in the recipe array (tied to the plan searched)
-            for (let i = 0; i < dbPlan.Recipes.length; i++) {
-                var recipeData = dbPlan.Recipes[i]
-                // push recipe data to our recipe array
-                recipeArr.push(recipeData)
-            }
-            res.json(recipeArr)
+            // //Loop through each recipe in the recipe array (tied to the plan searched)
+            // for (let i = 0; i < dbPlan.Recipes.length; i++) {
+            //     var recipeData = dbPlan.Recipes[i]
+            //     // push recipe data to our recipe array
+            //     recipeArr.push(recipeData)
+            // }
+            res.json(dbPlan)
         })
     });
 
