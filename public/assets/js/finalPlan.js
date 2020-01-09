@@ -1,3 +1,5 @@
+// import { moment } from "fullcalendar";
+
 //Declare plan id
 let planId = parseInt(window.location.href.substring(window.location.href.lastIndexOf('/') + 1))
 
@@ -6,13 +8,11 @@ $("document").ready(function () {
 
     //Retrieve data corresponding to plan (really only need to do this once, so consolidate at later date)
     $.get("/api/final_plan/" + planId).then(function (data) {
-        console.log("Data round two: ", data)
-
         //set data returned from Plan to corresponding date vars
         let planStart = moment(data.start_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
         let planEnd = moment(data.end_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
-        let planDates = data.plan_dates
-        let planTimes = data.plan_times
+        let planDates = JSON.parse(data.plan_dates)
+        let planTimes = JSON.parse(data.plan_times)
 
         console.log("plan start date: ", planStart)
         console.log("plan end date: ", planEnd)
@@ -39,8 +39,8 @@ $("document").ready(function () {
             events: [
                 {
                     title: 'Pasta e Fagiolo',
-                    start: "2019-10-13T20:00:00",
-                    end: "2019-10-13T21:00:00",
+                    start: "2020-01-08T20:00:00",
+                    end: "2020-01-08T21:00:00",
                     url: 'http://www.simplyrecipes.com/recipes/pasta_e_fagioli/'
                 }
             ],
@@ -52,22 +52,31 @@ $("document").ready(function () {
             }
         });
 
-        console.log("this is calendar: ", calendar)
-
         calendar.render();
 
         for (let i = 0; i < planDates.length; i++) {
-            var planstart = moment(planDates[i] + "T" + planTimes[i][0] + ":00").format()
 
-            var planend = moment(planDates[i] + "T" + planTimes[i][1] + ":00").format()
+            //loop through each date and format correctly
+            planDates[i] = moment(planDates[i], 'MM-DD-YYYY').format('YYYY-MM-DD')
 
+            //set begin prep time for each day in plan
+            let dayTimeStart = (planDates[i] + "T" + planTimes[i][0] + ":00")
+
+            //set end prep time for each day in plan
+            let dayTimeEnd = (planDates[i] + "T" + planTimes[i][1] + ":00")
+
+            //formatting
+            moment(dayTimeStart).format()
+            moment(dayTimeEnd).format()
+
+            //create event dynamically based on time starts and ends
             var event = {
-                title: "Recipe " + (i + 1),
-                start: planstart,
-                end: planend
+                title: "Recipe " + (0 + i),
+                start: dayTimeStart,
+                end: dayTimeEnd
             }
 
-            // console.log("this is what your custom event looks like: ", event)
+            console.log("Custom event: ", event)
             calendar.addEvent(event)
         }
 
@@ -76,7 +85,6 @@ $("document").ready(function () {
 })
 
 document.addEventListener('DOMContentLoaded', function () {
-
     $.get("/api/final_plan/" + planId).then(function (data) {
         console.log("Data: ", data)
 
