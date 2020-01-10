@@ -54,17 +54,15 @@ This is a gif highlighting the plan creation and display process:
 
 * Add additional cuisine buttons 
 
-* Final plan page shows:
- * Recipe titles linked to calendar slots
-	* Recipes linked to calendar spots based on prep/cook time
 * Create plan page has:
 	* ‘Plans’ table in DB needs fields for minutes available each day 
 	* records total available minutes each day of plan
+	* cross references with recipe that fits amount of time in day
+	
 UI Updates
  * Hide default select arrows on input type="date" 
  * Color Scheme change? 
  * Cleaner date input fields
- * Full notation/comments on code
  
  Just for fun
   * ‘+’ button to add more time ranges for each day maybe
