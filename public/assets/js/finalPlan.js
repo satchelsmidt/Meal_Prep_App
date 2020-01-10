@@ -1,7 +1,8 @@
-// import { moment } from "fullcalendar";
-
 //Declare plan id
 let planId = parseInt(window.location.href.substring(window.location.href.lastIndexOf('/') + 1))
+
+//Declar recipe arr (needed throughout page)
+const recipeArr = []
 
 // Document function which displays recipe cards that correspond with current plan
 $("document").ready(function () {
@@ -13,7 +14,7 @@ $("document").ready(function () {
 
         //Havr to add an extra day to the end for it to be visible on calendar (because times are at 00:00 hours, does not reflect normally)
         let planEnd = moment(data.end_date, 'MM-DD-YYYY').add(1, 'days')
-   
+
         let planDates = JSON.parse(data.plan_dates)
         let planTimes = JSON.parse(data.plan_times)
 
@@ -29,13 +30,14 @@ $("document").ready(function () {
             defaultView: 'timeGrid',
             visibleRange: {
                 start: moment(planStart, 'MM-DD-YYYY').format('YYYY-MM-DD'),
-                end: moment(planEnd,'MM-DD-YYYY').format('YYYY-MM-DD')
+                end: moment(planEnd, 'MM-DD-YYYY').format('YYYY-MM-DD')
             },
             header: {
                 left: '',
                 center: 'title',
                 right: ''
             },
+            //This is a custom test event
             events: [
                 {
                     title: 'Pasta e Fagiolo',
@@ -55,6 +57,17 @@ $("document").ready(function () {
         calendar.render();
 
         for (let i = 0; i < planDates.length; i++) {
+            console.log("THIS IS RECIPE ARR: ", recipeArr)
+
+            let recipe
+
+            if (recipeArr[i]) {
+                //recipes formatted correctly, tied to date slots
+                recipe = cleanString(recipeArr[i].recipe_title)
+            }
+            else{
+                recipe = 'no recipe'
+            }
 
             //loop through each date and format correctly
             planDates[i] = moment(planDates[i], 'MM-DD-YYYY').format('YYYY-MM-DD')
@@ -71,7 +84,8 @@ $("document").ready(function () {
 
             //create event dynamically based on time starts and ends
             var event = {
-                title: "Recipe " + (0 + i),
+                // title: "Recipe " + (0 + i),
+                title: recipe,
                 start: dayTimeStart,
                 end: dayTimeEnd
             }
@@ -89,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("Data: ", data)
 
         //declare an empty array to hold our returned recipes
-        const recipeArr = []
+        // const recipeArr = []
         const ingredients = []
 
         //Loop through each recipe in the recipe array (tied to the plan searched)
@@ -147,3 +161,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+//function to capitalize recipes that come in improperly formatted
+function cleanString(str) {
+    if (str) {
+        let newStr = []
+        for (word of str.split(' ')) {
+            word = word[0].toUpperCase() + word.slice(1)
+            newStr.push(word)
+        }
+        newStr = newStr.join(' ')
+
+        return newStr
+    }
+}

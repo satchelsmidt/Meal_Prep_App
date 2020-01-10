@@ -130,22 +130,6 @@ $(document).on("click", "#submitTimes", function () {
         url: "api/plans",
         data: planTime
     })
-
-    //////////////OLD METHOD (Still used to generate calendar)/////////
-    // //loop through all dates in plan
-    // for (let i = dateArr.length; i >= 0 ; i--) {
-
-    //     //grab id's (dynamically generated) of each input slot
-    //     var timeOne = $(("#time" + i + "01")).val()
-
-    //     // console.log("time one:", timeOne)
-    //     timeStartArray.push(timeOne)
-
-    //     var timeTwo = $(("#time" + i + "02")).val()
-    //     // console.log("time two:", timeTwo)
-
-    //     timeEndArray.push(timeTwo)
-    // }
 });
 
 //cuisine types -- begins as empty and cuisines are added, separated by commas as necessary
@@ -314,7 +298,6 @@ var count = 1
 
 $(document).on("click", ".addRecipe", function (event) {
 
-    // console.log("COUNT OF YOUR COUNT VARIABLE:", count)
     $(this).attr("disabled", true)
     event.preventDefault()
 
@@ -337,19 +320,16 @@ $(document).on("click", ".addRecipe", function (event) {
         recipe_ingredients: theActualRecipeIngredients,
         recipe_steps: theActualRecipeSteps,
     }
-    // console.log(recipeDetails)
 
     $.post("/api/recipes", recipeDetails, function (data) {
-        // console.log("THIS IS YOUR DATA:", data)
     }).then(function () {
 
         for (let i = count; i > 0; i--) {
             $.get("/api/recipes_desc").then(function (data) {
 
-                // console.log("time for each recipe: ", parseInt(data[0].recipe_time))
-
                 totalRecipeMins = totalRecipeMins + parseInt(data[0].recipe_time)
 
+                //TODO: put in checks for total minutes selected v. available
                 // if (totalRecipeMins > totalMins) {
                 //     alert('Adding this recipe to plan would exceed total available time for the week')
                 //     //figure out how to change 'disabled' attribute to false before function returns (so that un-addable recipe can be clicked still)
@@ -363,11 +343,9 @@ $(document).on("click", ".addRecipe", function (event) {
     })
 });
 
-
-
+//Push selected recipes to database (linked to current plan), navigate to unique plan page
 $(document).on("click", "#createPlan", function (event) {
 
-    // console.log("CLICKED A BUTTON (create plan)")
     event.preventDefault()
     location.href = "/plans/" + planId
 
@@ -378,11 +356,6 @@ $(document).on("click", "#createPlan", function (event) {
             PlanId: planId
         }
 
-        // console.log("Data we are sending:", planRecipeDetails)
-
-        $.post("/api/recipe_plans", planRecipeDetails, function (data) {
-            // console.log("reached post request")
-            // console.log("THIS IS YOUR DATA(list of recipes selected + linked plans?):", data)
-        })
+        $.post("/api/recipe_plans", planRecipeDetails, function (data) {})
     }
 });
