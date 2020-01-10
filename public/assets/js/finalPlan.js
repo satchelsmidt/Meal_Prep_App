@@ -9,8 +9,11 @@ $("document").ready(function () {
     //Retrieve data corresponding to plan (really only need to do this once, so consolidate at later date)
     $.get("/api/final_plan/" + planId).then(function (data) {
         //set data returned from Plan to corresponding date vars
-        let planStart = moment(data.start_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
-        let planEnd = moment(data.end_date, 'DD-MM-YYYY').format('YYYY-MM-DD')
+        let planStart = data.start_date
+
+        //Havr to add an extra day to the end for it to be visible on calendar (because times are at 00:00 hours, does not reflect normally)
+        let planEnd = moment(data.end_date, 'MM-DD-YYYY').add(1, 'days')
+   
         let planDates = JSON.parse(data.plan_dates)
         let planTimes = JSON.parse(data.plan_times)
 
@@ -25,11 +28,8 @@ $("document").ready(function () {
             plugins: ['dayGrid', 'timeGrid'],
             defaultView: 'timeGrid',
             visibleRange: {
-                start: planStart,
-                end: planEnd
-            },
-            duration: {
-                days: 7
+                start: moment(planStart, 'MM-DD-YYYY').format('YYYY-MM-DD'),
+                end: moment(planEnd,'MM-DD-YYYY').format('YYYY-MM-DD')
             },
             header: {
                 left: '',
